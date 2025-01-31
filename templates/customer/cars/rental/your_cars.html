@@ -1,0 +1,83 @@
+{% extends "customer_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block sheri %}
+
+ <div class="container">
+    {% include "customer/cars/menu.html" %}
+    <div class="d-flex align-items-sm-start align-items-center">
+        <a href="{% url 'add_car_for_rental' %}" class="mx-auto mx-sm-0 d-block btn btn-primary rounded-2 mb-5 w-auto">
+            <i class="bi bi-patch-plus"></i>
+            اضافة وبيع سيارتك
+        </a>
+    </div>
+
+
+    <!-- cars -->
+
+     <h2 class="text-center text-md-start mb-3">
+        <span class="text-primary">سياراتك</span>
+        المعروضة للايجار
+     </h2>
+     <div class="row gx-5">
+        {% for i in '1234567789' %}
+        {% for car in cars %}
+        <div class="card p-0 mx-auto mx-md-2 mb-5" style="width: 18rem;">
+            {% comment %} <div class="position-relative z-1">
+                <div class="position-absolute top-0 start-50 translate-middle-x text-center bg-primary rounded-bottom p-1 fs-6 text-white shadow">
+                    {{car.price}}
+                    <small>ريال</small>
+                </div>
+                <strong class="position-absolute start-50 translate-middle-x text-warning fs-5 mt-3" style="-webkit-text-stroke: .5px #0d6efd;">خصم</strong>
+            </div> {% endcomment %}
+
+
+            <div class="position-relative">
+                <img src="{{car.car.icon.url}}" class="card-img-top" alt="...">
+                {% comment %} <div class="position-absolute bottom-0 start-50 translate-middle-x text-center bg-dark rounded-top p-1 text-white shadow" style="font-size: 10px;">
+                    شحن مجاني و1,000 ريال كاش باك
+                </div> {% endcomment %}
+            </div>
+            <div class="card-body">
+            <h5 class="card-title BodyTitle">{{car.car.title}}</h5>
+            <div class="d-flex align-items-end justify-content-between">
+                <div>
+                    <div>
+                        <small class="mb-0 text-primary d-block BodySubtitle">سعر اليومي</small>
+                        <button class="btn btn-outline-dark p-1">
+                            {{car.daily_rate}} ريال
+                        </button>
+                    </div>
+                    <div>
+                        <small class="mb-0 text-primary d-block BodySubtitle">سعر الاسبوعي</small>
+                        <button class="btn btn-outline-dark p-1">
+                            {{car.weekly_rate}} ريال
+                        </button>
+                    </div>
+                    <div>
+                        <small class="mb-0 text-primary d-block BodySubtitle">سعر الشهري</small>
+                        <button class="btn btn-outline-dark p-1">
+                            {{car.monthly_rate}} ريال
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <a href="{% url 'edit_car' car.id %}" class="btn btn-primary me-1">
+                        تعديل
+                        </a>
+                    <a href="{% url 'view_rental_car' car.id %}" class="btn btn-dark me-1">
+                        عرض
+                        </a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+        
+    <!-- end cars -->
+ </div>
+
+{% endblock %}

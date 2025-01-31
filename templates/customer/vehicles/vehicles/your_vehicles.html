@@ -1,0 +1,71 @@
+{% extends "customer_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block sheri %}
+
+ <div class="container">
+    {% include "customer/cars/menu.html" %}
+    <div class="d-flex align-items-sm-start align-items-center">
+        <a href="{% url 'add_for_sell_vehicle' %}" class="mx-auto mx-sm-0 d-block btn btn-danger rounded-2 mb-5 w-auto">
+            <i class="bi bi-patch-plus"></i>
+            أضافة
+        </a>
+    </div>
+
+
+    <!-- cars -->
+
+     {% comment %} <h2 class="text-center text-md-start mb-3">
+        قائمة جميع
+        <span class="text-danger">سياراتك</span>
+     </h2> {% endcomment %}
+     <div class="row gx-5">
+        {% for i in '1234567789' %}
+        {% for car in vehicles %}
+        <div class="card p-0 mx-auto mx-md-2 mb-5" style="width: 18rem;">
+            {% comment %} <div class="position-relative z-1">
+                <div class="position-absolute top-0 start-50 translate-middle-x text-center bg-danger rounded-bottom p-1 text-white shadow BodyTitle">
+                    {{car.price|stringformat:'d'}}
+                    <small>ريال</small>
+                </div>
+                <strong class="position-absolute start-50 translate-middle-x text-warning fs-5 mt-3" style="-webkit-text-stroke: .5px #0d6efd;">خصم</strong>
+            </div> {% endcomment %}
+
+
+            <div class="position-relative">
+                <img src="{{car.image.url}}" class="card-img-top" alt="...">
+                {% comment %} <div class="position-absolute bottom-0 start-50 translate-middle-x text-center bg-dark rounded-top p-1 text-white shadow" style="font-size: 10px;">
+                    شحن مجاني و1,000 ريال كاش باك
+                </div> {% endcomment %}
+            </div>
+            <div class="card-body">
+            <h5 class="card-title BodyTitle">{{car.title}}</h5>
+            <div class="d-flex align-items-end justify-content-between">
+                <div>
+                    <small class="mb-0 text-danger d-block BodySubtitle">سعر شامل الضريبة
+                        
+                    </small>
+                    <button class="btn btn-outline-dark">
+                        {{car.price}} ريال
+                    </button>
+                </div>
+                <div>
+                    <a href="{% url 'edit_for_sell_vehicle' car.id %}" class="btn btn-danger me-1">
+                        تعديل
+                        </a>
+                    <a href="{% url 'view_for_sell_vehicle' car.id %}" class="btn btn-dark me-1">
+                        عرض
+                        </a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+        
+    <!-- end cars -->
+ </div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "dashboard_base.html" %}
+{% load panel_tags %}
+{% load i18n %}
+
+{% block content %}
+<!-- Project Form -->
+<div class="container p-4 ">
+    <div class="d-flex align-items-start mb-3">
+
+        <div class="rounded-3 me-2 p-1 bg-body-tertiary d-flex ">
+            <a href="{% url 'dashboard_index' %}" class="btn btn-dark me-1">{% trans "اضافة سيارة" %}</a>
+            <a tabindex="0" class="btn btn-light border border-1" id="filter-popover-btn" role="button" data-bs-toggle="popover">
+              <i class="bi bi-funnel-fill"></i>
+              {% trans "تصفية" %}
+            </a>
+        </div>
+    
+    
+        <form action="{% url 'dashboard_index' %}" method="post" id="SelectedForm">
+          {% csrf_token %}
+          <input type="hidden" value="xlsx" name="out_format" id="out_format">
+          <input type="hidden" name="method" value="xlsx">
+        </form>
+        
+
+
+        <button type="button" class="btn btn-outline-danger disabled me-2" onclick="submitSelected('delete')" id="deleteBtn">{% trans "حذف المحدد" %}</button>
+      </div>
+
+
+    <div class="border rounded p-3 mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الماركة</th>
+                    <th>الموديل</th>
+                    <th>السنة</th>
+                    <th>اللون الخارجي</th>
+                    <th>اللون الداخلي</th>
+                    <th>السعر</th>
+                    <th>الحالة</th>
+                    <th>إجرائات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ car.brand }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.year }}</td>
+                    <td>{{ car.exterior_color }}</td>
+                    <td>{{ car.interior_color }}</td>
+                    <td>{{ car.price }}</td>
+                    <td>{{ car.get_condition_display }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'dashboard_edit_for_sell_car' car.id %}">تعديل</a>
+                        <a class="btn btn-dark" href="{% url 'view_car' car.id %}" target="_blank">عرض</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">لا توجد سيارات متاحة حالياً.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="py-4"></div>
+
+
+
+{% endblock content %}
+

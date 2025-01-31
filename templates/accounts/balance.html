@@ -1,0 +1,129 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load customer_tags %}
+{% block heads %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+{% endblock heads %}
+{% block sheri %}
+
+<!-- Project Form -->
+<div class="container p-4 mb-5  col-lg-8">
+    
+
+    <div class="text-center">
+        {% if user.userprofile.img_base64 %}
+        <div id="cropped-result">
+          <div class="carousel-item-content position-relative d-inline-block rounded-circle overflow-hidden" id="cropped-result">
+            <img src="{{user.userprofile.img_base64}}" width="100" alt="..." >
+            <input type="hidden" value="{{user.userprofile.img_base64}}" id="userprofile-avatar" name="profile_img" class="form-control" >
+          </div>
+        </div>
+        {% else %}
+        <div id="cropped-result">
+          <img src="{% static 'img/profile_default/default-profile-img-2.png' %}" class="d-inline-block rounded-circle mx-auto" width="100" >
+          <input type="hidden" id="userprofile-avatar" name="profile_img" class="form-control" >
+        </div>
+        {% endif %}
+        <h1 class="fs-4">{{user.first_name}} {{user.last_name}}</h1>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 gx-3 mb-3">
+        <div class="p-2">
+            <div class="bg-body-tertiary px-5 py-4 rounded">
+                <h3>الرصيد</h3>
+                <i class="bi bi-wallet fs-2 me-2"></i>
+                <span class="fw-bold fs-1">{{user.userprofile.balance}}</span>
+                <span>USD</span>
+            </div>
+        </div>
+        {% get_user_orders request.user.id as user_orders %}
+        <div class="p-2">
+            <div class="bg-body-tertiary px-5 py-4 rounded">
+                <h3>معاملات</h3>
+                <i class="bi bi-box2-fill fs-2 me-2"></i>
+                <span class="fw-bold fs-1">{{user_orders.count}}</span>
+                <span>order</span>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-lg rounded-3 btn-dark float-md-start d-block ">شحن رصيد</a>
+</div>
+<!-- End Project Form -->
+
+
+<div class="container p-4  col-lg-8">
+    <div class="order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">معاملات</span>
+          <span class="badge bg-primary rounded-pill">{{payments.count}}</span>
+        </h4>
+        <ul class="list-group mb-3">
+        {% for payment in payments %}
+        {% if payment.order_type == '1' %}
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">{{payment.title}}</h6>
+              <small class="text-body-secondary">{{payment.action_date|date:'Y-m-d'}}</small>
+            </div>
+            <span class="text-body-secondary">-${{payment.amount}}</span>
+          </li>
+        {% elif payment.order_type == '2' %}
+          <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+            <div class="text-success">
+              <h6 class="my-0">{{payment.title}}</h6>
+              <small>{{payment.action_date|date:'Y-m-d'}}</small>
+            </div>
+            <span class="text-success">+${{payment.amount}}</span>
+          </li>
+          {% endif %}
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>مجموع (USD)</span>
+            <strong>${{amount_payments}}</strong>
+          </li>
+        </ul>
+
+      </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="cropImagePop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <!-- <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Change Profile Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+
+            <div class="modal-body p-5">
+
+                <div class="demo-wrap upload-demo mb-5">
+                    <div class="container mx-0">
+                        <div class="pull-left mb-3">
+
+                            <!-- <label for="exampleInputEmail1" class="form-label">رفع صورة</label> -->
+                            <input type="file" id="upload" class="form-control" value="" accept="image/*" />
+
+                        </div>
+                        <div class="pull-left">
+                            <div class="upload-msg" onclick="document.querySelector('#upload').click()">
+                                معاينة
+                            </div>
+                            <div class="upload-demo-wrap">
+                                <div id="upload-demo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 mb-2 btn btn-lg rounded-3 bg-light-orange upload-result" type="submit">Change</button>
+                <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-4"></div>
+
+{% endblock %}

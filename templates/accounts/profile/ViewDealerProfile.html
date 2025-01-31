@@ -1,0 +1,497 @@
+{% extends "customer_base.html" %}
+{% load customer_tags %}
+{% load static %}
+{% block links %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+{% endblock links %}
+{% block sheri %}
+
+
+
+<!-- Project Form -->
+<div class="container p-2 p-md-4 pt-5">
+    <!-- <h5 class="mt-5 text-center mb-3">صاحب الخدمة</h5> -->
+
+    <form class="bg-body-tertiary  rounded needs-validation FormAuto" novalidate id="project_form" method="post">
+        <div class="text-center">
+            {% if user.dealerprofile.img_base64 %}
+            <div id="cropped-result">
+              <div class="carousel-item-content position-relative d-inline-block rounded-circle overflow-hidden" id="cropped-result">
+                <img src="{{user.dealerprofile.img_base64}}" width="150" alt="..." data-bs-toggle="modal" data-bs-target="#cropImagePop">
+                <input type="hidden" value="{{user.dealerprofile.img_base64}}" id="userprofile-avatar" name="profile_img" class="form-control" >
+                <i class="bi bi-patch-check position-absolute fixed-bottom bg-success text-light" role="button" onclick="CarouselOnclickRemove()"></i>
+              </div>
+            </div>
+            {% else %}
+            <div id="cropped-result">
+              <img src="{% static 'img/profile_default/default-profile-img-2.png' %}" class="d-inline-block rounded-circle mx-auto" width="150" data-bs-toggle="modal" data-bs-target="#cropImagePop">
+              <input type="hidden" id="userprofile-avatar" name="profile_img" class="form-control" >
+            </div>
+            {% endif %}
+        </div>
+
+        <h1 class="text-center fs-3">{{dealerprofile.dealer_name}}</h1>
+        <div class="text-center mb-5">
+            <small class="me-2">
+              <i class="fa-solid fa-user"></i>
+              صاحب معرض
+            </small>
+            {% comment %} <small class="me-2">
+              <i class="fa-solid fa-briefcase"></i>
+              {{dealerprofile.specialty}}
+            </small>             {% endcomment %}
+            <small class="me-2">
+              <i class="fa-solid fa-location-dot"></i>
+              {{dealerprofile.location}} . {{dealerprofile.city}}
+            </small>            
+        </div>
+
+        {% if provider.id == request.user.id %}
+        <!-- Button trigger modal -->
+         <div class="text-center">
+          <a href="{% url 'EditDealerProfile' %}" type="button" class="btn btn-primary mt-2 mb-4">
+            تعديل الملف المعرض
+          </a>
+         </div>
+         {% endif %}
+
+      <!-- End Button trigger modal -->
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+              <i class="fa-solid fa-user"></i>
+              الملف الشخصي
+            </button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+              <i class="bi bi-car-front-fill"></i>
+              السيارات
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark" id="vehicle-tab" data-bs-toggle="tab" data-bs-target="#vehicle-tab-pane" type="button" role="tab" aria-controls="vehicle-tab-pane" aria-selected="false">
+              <i class="bi bi-truck-front-fill"></i>
+              المركبات
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+              <i class="fa-solid fa-star"></i>
+              التقيمات
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content bg-white border border-top-0 mb-3" id="myTabContent">
+          <div class="tab-pane fade show active py-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">            
+            
+            <div class="p-3">
+              <p>نبذة</p>
+              <hr>
+                {% for breaked in dealerprofile.get_splited_desc %}
+                <p class="mb-0">
+                  {{breaked}}
+                </p>
+                {% endfor %}
+            </div>
+
+          </div>
+
+          
+          <div class="tab-pane fade p-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            
+            <div class="w-100">
+              <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">جميع التقيمات</h6>
+                {% for review in reviews %}
+                <div class="d-flex text-body-secondary pt-3">
+                  <img src="{{review.reviewer.profile_img_base64}}" class="bd-placeholder-img flex-shrink-0 me-2 rounded-circle" width="32" height="32">
+                  <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                          <strong class="text-gray-dark">{{review.reviewer.get_full_name}}</strong>
+                        <p>{{review.service_request.when_updated}}</p>
+                      </div>
+    
+                      <div class="text-end">
+                        <a href="{% url 'Service' review.service_request.service.id %}" type="button" class="btn btn-sm btn-outline-primary">عرض الخدمة</a>
+                        
+                        <div class="my-2 text-nowrap">
+                          {% for i in review.create_rating_range %}
+                            {% if i %}
+                            <i class="fa-solid fa-star"></i>
+                            {% else %}
+                            <i class="fa-regular fa-star"></i>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+
+                      </div>
+                    </div>
+                    <p>{{review.comment}}</p>
+
+                  </div>
+                </div>
+                {% empty %}
+                <p class="text-center mt-5">لا يوجد تقيمات حالياََ</p>  
+                {% endfor %}
+    
+              
+              </div>
+        
+            </div>
+          </div>
+
+          <div class="tab-pane fade p-4" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+
+
+    <!-- cars -->
+{% comment %} 
+     <h2 class="text-center text-md-start mb-3">
+        <span class="text-danger">سيارات</span>
+         خصيصاً لك
+     </h2> {% endcomment %}
+     {% if provider.id == request.user.id %}
+     <div class="d-flex align-items-sm-start align-items-center">
+      <a href="{% url 'add_car_for_sell' %}" class="mx-auto mx-sm-0 d-block btn btn-danger rounded-2 mb-5 w-auto">
+          <i class="bi bi-patch-plus"></i>
+          أضافة
+      </a>
+  </div>
+     {% endif %}
+     <div class="row gx-5">
+      {% for i in '1234567789' %}
+      {% for car in cars %}
+      <div class="card p-0 mx-auto mx-md-2 mb-5" style="width: 18rem;">
+          <div class="position-relative z-1">
+              <div class="position-absolute top-0 start-50 translate-middle-x text-center bg-danger rounded-bottom p-1 text-white shadow BodyTitle">
+                  {{car.price|stringformat:'d'}}
+                  <small>ريال</small>
+              </div>
+              <strong class="position-absolute start-50 translate-middle-x text-warning fs-5 mt-3" style="-webkit-text-stroke: .5px #0d6efd;">خصم</strong>
+          </div>
+
+
+          <div class="position-relative">
+              <img src="{{car.icon.url}}" class="card-img-top" alt="...">
+              <div class="position-absolute bottom-0 start-50 translate-middle-x text-center bg-dark rounded-top p-1 text-white shadow" style="font-size: 10px;">
+                  شحن مجاني و1,000 ريال كاش باك
+              </div>
+          </div>
+          <div class="card-body">
+          <h5 class="card-title BodyTitle">{{car.title}}</h5>
+          <div class="d-flex align-items-end justify-content-between">
+              <div>
+                  <small class="mb-0 text-danger d-block BodySubtitle">سعر شامل الضريبة</small>
+                  <button class="btn btn-outline-dark">
+                      {{car.price}} ريال
+                  </button>
+              </div>
+              <div>
+                <div>
+                  {% if provider.id == request.user.id %}
+                  <a href="{% url 'edit_car' car.id %}" class="btn btn-danger me-1">
+                    تعديل
+                    </a>
+                  {% endif %}
+
+                  <a href="{% url 'view_car' car.id %}" class="btn btn-dark me-1">
+                  عرض
+                  </a>
+                </div>
+                
+                  {% comment %} <i class="bi bi-heart fs-3"></i> {% endcomment %}
+              </div>
+          </div>
+          </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+  </div>
+  <!-- end cars -->
+          </div>
+
+          
+          <div class="tab-pane fade p-4" id="vehicle-tab-pane" role="tabpanel" aria-labelledby="vehicle-tab" tabindex="0">
+            {% if provider.id == request.user.id %}
+            <div class="d-flex align-items-sm-start align-items-center">
+              <a href="{% url 'add_for_sell_vehicle' %}" class="mx-auto mx-sm-0 d-block btn btn-danger rounded-2 mb-5 w-auto">
+                  <i class="bi bi-patch-plus"></i>
+                  أضافة
+              </a>
+          </div>
+            {% endif %}
+    <!-- cars -->
+
+     {% comment %} <h2 class="text-center text-md-start mb-3">
+        قائمة جميع
+        <span class="text-danger">سياراتك</span>
+     </h2> {% endcomment %}
+     <div class="row gx-5">
+      {% for i in '1234567789' %}
+      {% for car in vehicles %}
+      <div class="card p-0 mx-auto mx-md-2 mb-5" style="width: 18rem;">
+          {% comment %} <div class="position-relative z-1">
+              <div class="position-absolute top-0 start-50 translate-middle-x text-center bg-danger rounded-bottom p-1 text-white shadow BodyTitle">
+                  {{car.price|stringformat:'d'}}
+                  <small>ريال</small>
+              </div>
+              <strong class="position-absolute start-50 translate-middle-x text-warning fs-5 mt-3" style="-webkit-text-stroke: .5px #0d6efd;">خصم</strong>
+          </div> {% endcomment %}
+
+
+          <div class="position-relative">
+              <img src="{{car.image.url}}" class="card-img-top" alt="...">
+              {% comment %} <div class="position-absolute bottom-0 start-50 translate-middle-x text-center bg-dark rounded-top p-1 text-white shadow" style="font-size: 10px;">
+                  شحن مجاني و1,000 ريال كاش باك
+              </div> {% endcomment %}
+          </div>
+          <div class="card-body">
+          <h5 class="card-title BodyTitle">{{car.title}}</h5>
+          <div class="d-flex align-items-end justify-content-between">
+              <div>
+                  <small class="mb-0 text-danger d-block BodySubtitle">سعر شامل الضريبة
+                      
+                  </small>
+                  <button class="btn btn-outline-dark">
+                      {{car.price}} ريال
+                  </button>
+              </div>
+              <div>
+                {% if provider.id == request.user.id %}
+                <a href="{% url 'edit_for_sell_vehicle' car.id %}" class="btn btn-danger me-1">
+                  تعديل
+                  </a>
+                {% endif %}
+
+                  <a href="{% url 'view_for_sell_vehicle' car.id %}" class="btn btn-dark me-1">
+                      عرض
+                      </a>
+              </div>
+          </div>
+          </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+  </div>
+          </div>
+
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm ">
+            <div>
+              <h6 class="my-0">اسم الكامل</h6>
+            </div>
+            <span class="text-body-secondary">{{provider_userprofile.get_full_name}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">ساعات العمل</h6>
+            </div>
+            <span class="text-body-secondary">{{dealerprofile.opening_hours}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">عدد الخدمات</h6>
+            </div>
+            <span class="text-body-secondary">{{services.count}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">بريد</h6>
+            </div>
+            <span class="text-body-secondary">{{provider.email}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">جوال</h6>
+            </div>
+            <span class="text-body-secondary">{{provider_userprofile.phone_number}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">المدينة</h6>
+            </div>
+            <span class="text-body-secondary">{{dealerprofile.city}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">العنوان</h6>
+            </div>
+            <span class="text-body-secondary">{{dealerprofile.address}}</span>
+          </li>
+
+        </ul>
+
+        
+
+    </form>
+</div>
+<!-- End Project Form -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="cropImagePop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <!-- <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Change Profile Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+
+            <div class="modal-body p-5">
+
+                <div class="demo-wrap upload-demo mb-5">
+                    <div class="container mx-0">
+                        <div class="pull-left mb-3">
+
+                            <!-- <label for="exampleInputEmail1" class="form-label">رفع صورة</label> -->
+                            <input type="file" id="upload" class="form-control" value="" accept="image/*" />
+
+                        </div>
+                        <div class="pull-left">
+                            <div class="upload-msg" onclick="document.querySelector('#upload').click()">
+                                معاينة
+                            </div>
+                            <div class="upload-demo-wrap">
+                                <div id="upload-demo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success upload-result" type="submit">Change</button>
+                <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal -->
+
+<style>
+.upload-demo .upload-demo-wrap,
+.upload-demo.ready .upload-msg {
+    display: none;
+}
+.upload-demo.ready .upload-result,
+.upload-demo.ready .upload-demo-wrap {
+    display: block;
+}
+.cr-boundary, .cr-boundary img {
+    border-radius: 15px !important;
+}
+
+.upload-demo-wrap {
+    width: min(100%, 300px);
+    height: 300px;
+    margin: 0 auto;
+}
+
+.upload-msg {
+    text-align: center;
+    padding: 50px;
+    font-size: 22px;
+    color: #aaa;
+    width: 260px;
+    margin: 50px auto;
+    border: 1px solid #aaa;
+}
+</style>
+
+<div class="py-4"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script>
+  
+    $(document).ready(function(){
+    var $uploadCrop;
+    function readFile(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    
+        reader.onload = function (e) {
+            $('.upload-demo').addClass('ready');
+            $uploadCrop.croppie('bind', {
+                    url: e.target.result
+            }).then(function(){
+                    console.log('jQuery bind complete');
+            });
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+    else {
+            console.log("Sorry - you're browser doesn't support the FileReader API");
+        }
+    }
+    
+    $uploadCrop = $('#upload-demo').croppie({
+            viewport: {
+                    width: 200,
+                    height: 200,
+                    type: 'circle'
+            },
+            enableExif: true
+    });
+    
+    $('#upload').on('change', function () { readFile(this); });
+    $('.upload-result').on('click', function (ev) {
+    $uploadCrop.croppie('result', {
+      type: 'canvas',
+      size: 'viewport'
+    }).then(function (resp) {
+        // in this hidden input we can send cropped image to server
+        $('#userprofile-avatar').val(resp);
+        $('#cropped-result img').attr('src',resp);
+        $('#cropImagePop').modal('hide');
+    });
+    });    
+    
+    });
+    
+    
+    function CarouselOnclickRemove() {
+      let imgBox = document.querySelector('#cropped-result')
+      imgBox.querySelector('img').src = default_img_profile
+      imgBox.querySelector('input').value = ""
+    }
+    </script>
+
+<style>
+  
+  .rating {
+    width: 120px;
+    height: 24px;
+    position: relative;
+    background-color: gray;
+  }
+  
+  .rating progress.rating-bg {
+    -webkit-appearance: none;
+    -moz-appearence: none;
+    appearance: none;
+    border: none;
+    display: inline-block;
+    height: 24px;
+    width: 100%;
+    color: orange;
+  }
+  
+  .rating progress.rating-bg::-webkit-progress-value {
+    background-color: orange;
+  }
+  
+  .rating progress.rating-bg::-moz-progress-bar {
+    background-color: orange;
+  }
+  
+  .rating svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+{% endblock %}

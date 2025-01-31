@@ -1,0 +1,72 @@
+{% load static %}
+{% load i18n %}
+
+
+<nav class="navbar navbar-expand-lg fixed-bottom mt-3">
+    <div class="container-fluid container">
+
+        <ul class="navbar-nav mx-auto p-1 my-1 glass-eff flex-row w-100 justify-content-center fs-md-5">
+          <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'CustomerHome' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'CustomerHome' %}">
+              <i class="bi bi-car-front-fill fs-4"></i>
+              <small>{% trans "Home" %}</small>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">
+              <i class="bi bi-palette-fill fs-4"></i>
+              <small>{% trans "اكسسورات" %}</small>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">
+              <i class="bi bi-tools fs-4"></i>
+              <small>{% trans "صيانة" %}</small>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'your_orders' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'your_orders' %}">
+              <i class="bi bi-box2-fill fs-4"></i>
+              <small>{% trans "طلبات" %}</small>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">
+              <i class="bi bi-bell-fill fs-4"></i>
+              <small>{% trans "اشعارات" %}</small>
+            </a>
+          </li>
+          {% comment %} <li class="nav-item px-2">
+            <a class="nav-link lh-1 d-flex flex-column align-items-center {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">
+              <i class="bi bi-person-fill fs-4"></i>
+              <small>{% trans "حسابي" %}</small>
+            </a>
+          </li> {% endcomment %}
+
+          <li class="nav-item px-2">
+            <div class="dropdown dropup">
+              <a href="#" class="nav-link d-flex lh-1 align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if request.user.userprofile.img_base64 %}
+                <img src="{{request.user.userprofile.img_base64}}" alt="" width="32" height="32" class="rounded-circle me-2">
+              {% else %}
+                <img src="{% static 'img/profile_default/default-profile-img-2.png' %}" alt="" width="32" height="32" class="rounded-circle me-2">
+              {% endif %}
+            </a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow position-absolute">
+                <li><a class="dropdown-item" href="{% url 'EditProfile' %}">ملف الشخصي</a></li>
+                <li><a class="dropdown-item" href="{% url 'EditDealerProfile' %}">ملف المعرض</a></li>
+                <li><a class="dropdown-item" href="{% url 'Balance' %}">المحفظة</a></li>
+                <li><a class="dropdown-item" href="#">الاعدادات</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'Logout' %}">تسجيل الخروج</a></li>
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+    </div>
+    
+  </nav>
+
+
+

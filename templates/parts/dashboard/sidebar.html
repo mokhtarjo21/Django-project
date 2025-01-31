@@ -1,0 +1,144 @@
+{% load static %}
+{% load i18n %}
+
+<div class="offcanvas offcanvas-sidbar offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="height:100vh; width:350px;overflow: hidden; overflow-y: scroll;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto p-2 text-body-secondary text-decoration-none">
+      <img width="75" src="{% static 'img/logoN.png' %}" alt="">
+
+    </a>
+    <ul class="nav nav-pills navbar-dark flex-column mb-auto py-5">
+
+      <li class="nav-item">
+        <a href="{% url 'dashboard_index' %}" class="nav-link text-body-secondary" aria-current="page">
+            <i class="bi bi-house-fill me-2"></i>
+          {% trans "الرئيسية" %}
+        </a>
+
+      </li>
+
+      <li class="nav-item">
+        <a href="{% url 'dashboard_clients' %}" class="nav-link text-body-secondary" aria-current="page">
+            <i class="bi bi-people-fill me-2"></i>
+          {% trans "العملاء" %}
+        </a>
+
+      </li>
+
+      <li>
+        <a class="nav-link text-body-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample2">
+          <i class="bi bi-car-front-fill me-2"></i>
+            {% trans "السيارات" %}
+        </a>
+
+        <div class="collapse" id="collapseExample1">
+          <div class="mt-1">
+            <ul class="list-group">
+
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_for_sell_cars' %}">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "للبيع" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_for_rental_cars' %}">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "للأيجار" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_for_installment_cars' %}">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "للتقسيط" %}
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </li>
+ 
+
+
+      <li>
+        <a class="nav-link text-body-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+          <i class="bi bi-box2-fill me-2"></i>
+            {% trans "الطلبات" %}
+        </a>
+
+        <div class="collapse" id="collapseExample2">
+          <div class="mt-1">
+            <ul class="list-group">
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_orders' %}?order_type=buy_car">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "طلبات الشراء" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_orders' %}?order_type=car_import">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "طلبات الأستراد" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_orders' %}?order_type=car_rental">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "طلبات التأجير" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_orders' %}?order_type=car_installment">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "طلبات التقسيط" %}
+                </a>
+              </li>
+              <li class="list-group-item px-2 py-1">
+                <a class="nav-link text-body-secondary" href="{% url 'dashboard_installment_payment_requests' %}">
+                  <i class="bi bi-person-fill-gear me-2"></i>
+                  {% trans "طلبات دفع الأقساط" %}
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </li>
+ 
+
+    </ul>
+    <div class="bg-white p-3 rounded shadow-sm text-body-secondary">
+        <div class="d-flex justify-content-between align-items-center dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if user.userprofile.img_base64 %}  
+              <img src="{{user.userprofile.img_base64}}" alt="" width="46" height="46" class="rounded-circle me-2">
+              {% else %}
+              <img src="{% static 'img/profile_default/default-profile-img-2.png' %}" alt="" width="46" height="46" class="rounded-circle me-2">
+              {% endif %}  
+              <div>
+                    <p class="mb-1 text-dark fw-bold dropdown-toggle text-wrap">Ahmed Sheri</p>
+                    <span class="bg-light-orange rounded d-inline px-2 py-1 text-body-secondary">{% trans "المدير" %}</span>
+                </div>
+              </a>
+              <a href="{%  url 'Logout' %}" class="bg-body-tertiary btn btn-light px-2 py-1">
+              <!-- <a href="" class="text-decoration-none bg-body-tertiary px-2 py-1 text-body-secondary rounded"> -->
+                <i class="bi bi-door-open-fill"></i>
+
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="{% url 'dashboard_index' %}">{% trans "اضافة طالب" %}...</a></li>
+                <li><a class="dropdown-item" href="{% url 'dashboard_index' %}">{% trans "اضافة موظف" %}...</a></li>
+                <li><a class="dropdown-item" href="{% url 'dashboard_index' %}">{% trans "ملف المدرسة" %}</a></li>
+
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{%  url 'Logout' %}">{% trans "تسجيل الخروج" %}</a></li>
+              </ul>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+
+

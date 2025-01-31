@@ -1,0 +1,513 @@
+{% extends "customer_base.html" %}
+{% load i18n %}
+{% load static %}
+{% block heads %}
+<link rel="stylesheet" href="{% static 'css/cropper.min.css' %}" />
+{% endblock heads %}
+{% block sheri %}
+
+{% csrf_token %}
+<div class="container px-4 px-md-5">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis fs-4">اضافة سيارة للأيجار</h1>
+
+    </div>
+    <form class="col-lg-8 mx-auto bg-body-tertiary p-4 rounded needs-validation FormAuto" novalidate id="project_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {% for field in form %}
+        {% if field.field.widget.input_type != 'hidden' %}
+            <div id="{{ field.auto_id }}_error">
+            {{ field.errors }}
+            </div>
+            {{ field.label_tag }} {{ field }}
+            {% if field.help_text %}
+                <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                {{ field.help_text|safe }}
+                </p>
+            {% endif %}
+        {% else %}
+        {{ field }}
+        {% endif %}
+
+        {% endfor %}
+
+        <!-- Input to select image -->
+        <label for="id_icon" class="form-label">الصورة الرئيسية:</label>
+        <input type="file" required id="mainImageInput" accept="image/*"  class="form-control mb-3">
+        <p class="help form-text" id="id_icon_helptext">
+          اختر صورة الرئيسية التي ستظهر للسيارة
+          </p>
+        <img src="" id="mainImageOutPreview" class="w-100 rounded mb-3" alt="">
+        <input type="file" id="mainCroppedImageInput" hidden name="cropped_main_image">
+
+          
+    <!-- Carousel -->
+    <div id="imageCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+        <div class="carousel-inner rounded">
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+        <div class="pull-left mb-3">
+            <label for="exampleInputEmail1" class="form-label">رفع صور السيارة</label>
+            <input type="file" id="imageInput" class="form-control" value="" accept="image/*" />
+        </div>
+        <!-- End Button trigger modal -->
+
+        {% for field in rental_form %}
+        {% if field.field.widget.input_type != 'hidden' %}
+            <div id="{{ field.auto_id }}_error">
+            {{ field.errors }}
+            </div>
+            {{ field.label_tag }} {{ field }}
+            {% if field.help_text %}
+                <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                {{ field.help_text|safe }}
+                </p>
+            {% endif %}
+        {% else %}
+        {{ field }}
+        {% endif %}
+
+        {% endfor %}
+
+        <button type="submit" class="mb-5 btn btn-success d-block mx-auto">إضافة السيارة</button>
+    </form>
+</div>
+
+
+
+
+<!-- main image Modal -->
+<div class="modal fade" id="mainCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <!-- <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Change Profile Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+
+            <div class="modal-body p-5">
+              <div class="crop-container mb-3">
+                <img id="mainImagePreview" class="img-fluid" style="max-height: 400px;" />
+              </div>
+              <!-- Buttons -->
+                <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success upload-result" id="mainCropButton">تأكيد</button>
+                <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cropImagePop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <!-- <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Change Profile Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+
+            <div class="modal-body p-5">
+                <img id="cropImage" class="img-fluid rounded-4">
+
+                <section class="progress-area mt-3"></section>
+                <section class="uploaded-area mb-3"></section>
+                <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success upload-result" id="cropButton">تأكيد</button>
+                <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal -->
+
+<style>
+.cropper-container {
+    margin: 0 auto; /* توسيط الحاوية */
+  }
+
+  #cropImage {
+    max-width: 100%; /* اجعل الصورة تتوافق مع الحاوية */
+    max-height: 100%;
+  }
+</style>
+
+<div class="py-4"></div>
+<script src="{% static 'js/cropper.min.js' %}"></script>
+
+
+<style>
+/* UPLOAD CSS */
+
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+::selection{
+  color: #fff;
+  background: #6990F2;
+}
+.wrapper{
+  /* width: 430px; */
+  /* background: #fff; */
+  /* border-radius: 5px; */
+  padding: 10px;
+  /* box-shadow: 7px 7px 12px rgba(0,0,0,0.05); */
+}
+.wrapper header{
+  color: #6990F2;
+  font-size: 27px;
+  font-weight: 600;
+  text-align: center;
+}
+.wrapper #uploadForm{
+  height: 167px;
+  display: flex;
+  cursor: pointer;
+  margin: 30px 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 2px dashed #6990F2;
+}
+#uploadForm :where(i, p){
+  color: #6990F2;
+}
+#uploadForm i{
+  font-size: 50px;
+}
+#uploadForm p{
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+section .row{
+  margin-bottom: 10px;
+  background: #E9F0FF;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+section .row i{
+  color: #6990F2;
+  font-size: 30px;
+}
+section .details span{
+  font-size: 14px;
+}
+.progress-area .row .content{
+  width: 100%;
+  margin-left: 15px;
+}
+.progress-area .details{
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+  justify-content: space-between;
+}
+.progress-area .content .progress-bar{
+  height: 6px;
+  width: 100%;
+  margin-bottom: 4px;
+  background: #fff;
+  border-radius: 30px;
+}
+.content .progress-bar .progress{
+  height: 100%;
+  width: 0%;
+  background: #6990F2;
+  border-radius: inherit;
+}
+.uploaded-area{
+  max-height: 232px;
+  overflow-y: scroll;
+}
+.uploaded-area.onprogress{
+  max-height: 150px;
+}
+.uploaded-area::-webkit-scrollbar{
+  width: 0px;
+}
+.uploaded-area .row .content{
+  display: flex;
+  align-items: center;
+}
+.uploaded-area .row .details{
+  display: flex;
+  margin-left: 15px;
+  flex-direction: column;
+}
+.uploaded-area .row .details .size{
+  color: #404040;
+  font-size: 11px;
+}
+.uploaded-area i.fa-check{
+  font-size: 16px;
+}
+</style>
+{% endblock sheri %}
+
+{% block script %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  const mainImageInput = document.getElementById("mainImageInput");
+  const mainImageOutPreview = document.getElementById("mainImageOutPreview");
+  const mainCropModal = new bootstrap.Modal(document.getElementById('mainCropModal'));
+  const mainImagePreview = document.getElementById("mainImagePreview");
+  const mainCropButton = document.getElementById("mainCropButton");
+  const mainCroppedImageInput = document.getElementById("mainCroppedImageInput");
+
+  let mainCropper;
+
+  // عندما يتم اختيار صورة
+  mainImageInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        mainImagePreview.src = e.target.result; // عرض الصورة في العنصر
+        mainCropModal.show()
+        if (mainCropper) {
+          mainCropper.destroy(); // تدمير الكروبر إذا كان موجودًا
+        }
+        mainCropper = new Cropper(mainImagePreview, {
+          aspectRatio: 16 / 12,
+          viewMode: 1,
+          minContainerWidth:300,
+          minContainerHeight:300,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  mainCropButton.addEventListener("click", () => {
+          if (mainCropper) {
+            mainCropper.getCroppedCanvas().toBlob((blob) => {
+              if (blob) {
+                // إنشاء ملف جديد بناءً على Blob
+                const croppedFile = new File([blob], "cropped_image.png", {
+                  type: "image/png",
+                });
+
+                // إنشاء ملف وهمي في input
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                mainCroppedImageInput.files = dataTransfer.files;
+
+                mainImageOutPreview.src = mainCropper.getCroppedCanvas().toDataURL(); // إضافة الصورة إلى الـ input المخفي
+                mainCropModal.hide()
+              }
+            }, "image/png"); // يمكنك تغيير التنسيق إلى "image/jpeg" إذا أردت.
+          }
+        });
+
+});
+
+
+</script>
+
+
+<script>
+        const imageInput = document.getElementById('imageInput');
+        const cropModal = new bootstrap.Modal(document.getElementById('cropImagePop'));
+        const cropImage = document.getElementById('cropImage');
+        const cropButton = document.getElementById('cropButton');
+        const carouselInner = document.querySelector('#imageCarousel .carousel-inner');
+        let cropper;
+        $("#cropImagePop").on('hide.bs.modal', function(){
+            if (cropper) {
+                cropper.destroy();
+                imageInput.value = '';
+            }
+        });
+        // عندما يتم اختيار صورة
+        imageInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+            cropImage.src = e.target.result;
+            cropModal.show();
+
+            // تهيئة CropperJS
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 16 / 12,
+                viewMode: 1,
+                minContainerWidth:300,
+                minContainerHeight:300,
+
+            });
+            };
+            reader.readAsDataURL(file);
+        }
+        });
+
+        // عند النقر على زر التأكيد
+        cropButton.addEventListener('click', () => {
+        const croppedCanvas = cropper.getCroppedCanvas();
+        croppedCanvas.toBlob(blob => {
+            let car_img = new File([blob], "image.jpg", { type: "image/jpeg", lastModified: new Date() });
+            uploadFile(car_img)
+        });
+        
+        
+        
+        });
+
+
+
+        // إضافة مستمع للأحداث إلى الحاوية الرئيسية
+        carouselInner.addEventListener('click', (event) => {
+        // تحقق من أن العنصر الذي تم النقر عليه هو زر الحذف
+        if (event.target.classList.contains('delete-btn')) {
+            // العثور على العنصر الذي يحتوي على الصورة (carousel-item)
+            const carouselItem = event.target.closest('.carousel-item');
+            
+            // حذف العنصر
+            if (carouselItem) {
+                carouselItem.remove();
+                let img_id = carouselItem.dataset.img_id
+                postData('{{delete_car_img_url}}', {img_id:img_id})
+                // إذا كانت هناك عناصر أخرى، اجعل الأول نشطًا
+                const items = document.querySelectorAll('.carousel-item');
+                if (items.length > 0) {
+                    items[0].classList.add('active');
+                }
+            }
+        }
+        });
+
+
+
+function postData(url, payload) {
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+  </script>
+
+<script>
+    const UploadURL = "{% url 'UploadCarImage' form.car_id.value %}"
+    progressArea = document.querySelector(".progress-area"),
+    uploadedArea = document.querySelector(".uploaded-area");
+
+
+
+    function uploadFile(file) {
+  // معالجة رفع الملفات
+  let formData = new FormData();
+
+  // إضافة الملفات إلى FormData
+    formData.append("uploads[]", file); // `uploads[]` هو اسم الحقل في نموذج الإرسال
+
+  // إعداد XHR
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", UploadURL);
+
+  // عرض تقدم الرفع
+  xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+    let fileLoaded = Math.floor((loaded / total) * 100); // نسبة التقدم
+    let fileSize = (total / (1024 * 1024)).toFixed(2) + " MB"; // حجم الملف
+
+    let progressHTML = `
+      <li class="row">
+        <i class="fas fa-file-alt"></i>
+        <div class="content">
+          <div class="details">
+            <span class="name">${file.name} • Uploading</span>
+            <span class="percent">${fileLoaded}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress" style="width: ${fileLoaded}%;"></div>
+          </div>
+        </div>
+      </li>`;
+    progressArea.innerHTML = progressHTML;
+
+    // عند اكتمال الرفع
+    if (loaded === total) {
+      progressArea.innerHTML = "";
+      let uploadedHTML = `
+        <li class="row">
+          <div class="content upload">
+            <i class="fas fa-file-alt"></i>
+            <div class="details">
+              <span class="name">${file.name} • Uploaded</span>
+              <span class="size">${fileSize}</span>
+            </div>
+          </div>
+          <i class="fas fa-check"></i>
+        </li>`;
+      uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+    }
+  });
+
+  xhr.addEventListener("load", function() {
+    if (xhr.status === 200) {
+        let jsonResponse = JSON.parse(xhr.response);
+        // الاستجابة الناجحة
+        const croppedImage = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+        // إضافة الصورة إلى الـ Carousel
+        const newCarouselItem = document.createElement('div');
+        newCarouselItem.classList.add('carousel-item');
+        newCarouselItem.dataset.img_id = jsonResponse.id
+        newCarouselItem.innerHTML = `
+        <img src="${croppedImage}" class="d-block w-100" alt="Cropped Image">
+        <button class="btn btn-danger delete-btn position-absolute bottom-0 start-50 translate-middle-x mb-2">حذف</button>
+        `;
+
+        carouselInner.appendChild(newCarouselItem);
+
+        // تعيين العنصر الجديد كعنصر نشط
+        const items = carouselInner.querySelectorAll('.carousel-item');
+        items.forEach(item => item.classList.remove('active'));
+        newCarouselItem.classList.add('active');
+    } else {
+      // حدث خطأ في الطلب
+      alert("حدثت خطاء اثناء رفع الصورة");
+    }
+  });
+
+
+  xhr.addEventListener("loadend", function() {
+    cropper.destroy(); // إزالة CropperJS
+    cropModal.hide(); // إخفاء المودال
+    imageInput.value = ''; // إعادة تعيين المدخل
+  });
+
+  // إرسال البيانات
+  xhr.send(formData);
+
+}
+
+</script>
+{% endblock script %}

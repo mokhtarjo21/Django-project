@@ -1,0 +1,159 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block heads %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+{% endblock heads %}
+{% block sheri %}
+
+<!-- Project Form -->
+<div class="container p-4 ">
+    <div class="d-flex mb-3 justify-content-center justify-content-sm-start">
+        <a class="btn btn-outline-dark rounded-4 me-2" data-bs-toggle="modal" data-bs-target="#modalCarimportOrder">استيراد سيارة</a>
+    </div>
+    <div class="order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">طلباتك</span>
+          <span class="badge bg-primary rounded-pill">{{orders.count}}</span>
+        </h4>
+        <ul class="list-group mb-3">
+            {% for order in orders %}
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-primary">
+                      {% if order.order_type == 'buy_car' %}
+                        <h6 class="my-0"><span class="me-1">
+                            {{order.buy_car_order.car.title}}
+                            <span class="text-nowrap">({{order.buy_car_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">شراء وشحن السيارة</small>
+                    {% elif order.order_type == 'car_import' %}
+                        <h6 class="my-0"><span class="me-1">
+                            {{order.buy_car_order.car_import}}
+                            <span class="text-nowrap">({{order.buy_car_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">استراد وشحن السيارة</small>
+                    {% elif order.order_type == 'car_rental' %}
+                        <h6 class="my-0"><span class="me-1">
+                          {{order.car_rental_order.car_rental.car}}
+                          <span class="text-nowrap">({{order.car_rental_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">تأجير سيارة</small>
+                    {% elif order.order_type == 'car_installment' %}
+                        <h6 class="my-0"><span class="me-1">
+                          {{order.car_installment_order.car}}
+                          <span class="text-nowrap">({{order.car_installment_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">طلب شراء السيارة بتقسيط</small>
+                    {% elif order.order_type == 'vehicle_rental_order' %}
+                        <h6 class="my-0"><span class="me-1">
+                          {{order.vehicle_rental_order.vehicle}}
+                          <span class="text-nowrap">({{order.vehicle_rental_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">طلب نقل حمولة</small>
+                    {% elif order.order_type == 'buy_vehicle' %}
+                        <h6 class="my-0"><span class="me-1">
+                          {{order.buy_vehicle_order.vehicle}}
+                          <span class="text-nowrap">({{order.buy_vehicle_order.get_status_display}})</span>
+                        </h6>
+                    <small class="text-body-secondary">طلب شراء مركبة</small>
+                      {% endif %}
+
+                    </div>
+                    <div>
+                        <a 
+                        {% if order.order_type == 'buy_car' or order.order_type == 'car_import' %}
+                        href="{% url 'view_buy_car_order' order.id %}"
+                        {% elif order.order_type == 'car_rental' %}
+                        href="{% url 'view_rental_car_order' order.id %}"
+                        {% elif order.order_type == 'car_installment' %}
+                        href="{% url 'view_installment_car_order' order.id %}"
+                        {% elif order.order_type == 'vehicle_rental_order' %}
+                        href="{% url 'view_vehicle_rental_order' order.id %}"
+                        {% elif order.order_type == 'buy_vehicle' %}
+                        href="{% url 'view_buy_vehicle_order' order.id %}"
+                        {% endif %}
+                         class="btn btn-secondary">حالة الطلب</a>
+                    </div>
+                </li>
+            {% empty %}
+            <p class="text-center">لا يوجد طلبات حالياََ</p>
+            {% endfor %}
+
+
+        </ul>
+
+      </div>
+
+</div>
+
+<div class="py-4"></div>
+
+
+
+<!-- car import Modal -->
+<div class="modal fade" id="modalCarimportOrder" tabindex="-1" aria-labelledby="modalCarimportOrderlabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">{% trans "طلب استراد سيارة" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body p-5 pt-0">
+          <form class="FormAuto" action="{% url 'order_car_import' %}" method="post">
+            {% csrf_token %}
+            
+            {% for field in car_import_form %}
+            {% if field.field.widget.input_type != 'hidden' %}
+                <div id="{{ field.auto_id }}_error">
+                {{ field.errors }}
+                </div>
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                    {{ field.help_text|safe }}
+                    </p>
+                {% endif %}
+            {% else %}
+            {{ field }}
+            {% endif %}
+
+            {% endfor %}
+
+
+
+            {% for field in buy_car_form %}
+            {% if field.field.widget.input_type != 'hidden' %}
+                <div id="{{ field.auto_id }}_error">
+                {{ field.errors }}
+                </div>
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                    {{ field.help_text|safe }}
+                    </p>
+                {% endif %}
+            {% else %}
+            {{ field }}
+            {% endif %}
+    
+            {% endfor %}
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">طلب استراد السيارة</button>
+            <small class="text-body-secondary">بالنقر فوق "طلب الشراء"، فإنك توافق على شروط الاستخدام.</small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
+
+{% block script %}
+{% if show_car_import %}
+  <script>
+    $(document).ready(function() {
+    $('#modalCarimportOrder').modal('show')
+    });
+  </script>
+{% endif %}
+{% endblock script %}
+{% endblock %}

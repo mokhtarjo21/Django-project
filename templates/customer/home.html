@@ -1,0 +1,75 @@
+{% extends "customer_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block sheri %}
+
+ <div class="container">
+    {% include "customer/cars/menu.html" %}
+    <!-- <div class="d-flex align-items-sm-start align-items-center">
+        <a href="{% url 'add_car_for_rental' %}" class="mx-auto mx-sm-0 d-block btn btn-primary rounded-2 mb-5 w-auto">
+            <i class="bi bi-patch-plus"></i>
+            اضافة وبيع سيارتك
+        </a>
+    </div> -->
+
+
+    <!-- cars -->
+<!-- 
+     <h2 class="text-center text-md-start mb-3">
+        <span class="text-primary">سياراتك</span>
+        المعروضة للايجار
+     </h2> -->
+     <div class="row p-3">
+        <div class="card p-2 mx-auto mx-md-2 mb-2 rounded-4 bg-body-tertiary" style="width: 8rem;">
+            <div class="position-relative">
+                <img src="{% static 'img/gif/menu/ss.svg' %}" class="mx-auto d-block" alt="..." height=75>
+            </div>
+            <div class="card-body p-0 text-center">
+                <h4 class="card-title BodyTitle">شراء السيارات</h4>
+                <small class="BodySubtitle">اعثر على افضل السيارات الجديدة والمستعملة</small>
+            </div>
+        </div>
+        <div class="card p-2 mx-auto mx-md-2 mb-2 rounded-4 bg-body-tertiary" style="width: 8rem;">
+            <div class="position-relative">
+                <img src="{% static 'img/gif/menu/sssss.svg' %}" class="mx-auto d-block" alt="..." height=75>
+            </div>
+            <div class="card-body p-0 text-center">
+                <h4 class="card-title BodyTitle">شراء مركبات</h4>
+                <small class="BodySubtitle">اعثر على افضل السيارات الجديدة والمستعملة</small>
+            </div>
+        </div>
+        <div class="card p-2 mx-auto mx-md-2 mb-2 rounded-4 bg-body-tertiary" style="width: 8rem;">
+            <div class="position-relative">
+                <img src="{% static 'img/gif/menu/sss.svg' %}" class="mx-auto d-block" alt="..." height=75>
+            </div>
+            <div class="card-body p-0 text-center">
+                <h4 class="card-title BodyTitle">تأجير السيارات</h4>
+                <small class="BodySubtitle">اعثر على افضل السيارات الجديدة والمستعملة</small>
+            </div>
+        </div>
+        <div class="card p-2 mx-auto mx-md-2 mb-2 rounded-4 bg-body-tertiary" style="width: 8rem;">
+            <div class="position-relative">
+                <img src="{% static 'img/gif/menu/ssss.svg' %}" class="mx-auto d-block" alt="..." height=75>
+            </div>
+            <div class="card-body p-0 text-center">
+                <h2 class="card-title BodyTitle">تقسيط السيارات</h4>
+                <small class="BodySubtitle">اعثر على افضل السيارات الجديدة والمستعملة</small>
+            </div>
+        </div>
+        <div class="card p-2 mx-auto mx-md-2 mb-2 rounded-4 bg-body-tertiary" style="width: 8rem;">
+            <div class="position-relative">
+                <img src="{% static 'img/gif/menu/ssssss.svg' %}" class="mx-auto d-block" alt="..." height=75>
+            </div>
+            <div class="card-body p-0 text-center">
+                <h2 class="card-title BodyTitle">استراد</h4>
+                <small class="BodySubtitle">اعثر على افضل السيارات الجديدة والمستعملة</small>
+            </div>
+        </div>
+
+    </div>
+        
+    <!-- end cars -->
+ </div>
+
+{% endblock %}

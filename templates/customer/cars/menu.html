@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<!-- menu -->
+<!-- justify-content-center justify-content-sm-start -->
+<div class="d-flex mb-3 flex-wrap">
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2 {% if request.resolver_match.url_name == 'buy_cars' %}active{% endif %}" href="{% url 'buy_cars' %}">شراء</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2 {% if request.resolver_match.url_name == 'your_cars' %}active{% endif %}" href="{% url 'your_cars' %}">بيع</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2 {% if request.resolver_match.url_name == 'rental_cars' %}active{% endif %}" href="{% url 'rental_cars' %}">تأجير</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2 {% if request.resolver_match.url_name == 'installment_cars' %}active{% endif %}" href="{% url 'installment_cars' %}">تقسيط</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2 {% if request.resolver_match.url_name == 'for_sell_vehicles' %}active{% endif %}" href="{% url 'for_sell_vehicles' %}">مركبات</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2" href="{% url 'your_orders' %}?show_car_import=1">استيراد</a>
+    <a class="btn btn-outline-dark rounded-4 me-2 mb-2">مزاد</a>
+</div>
+<!-- end menu -->

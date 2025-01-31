@@ -1,0 +1,86 @@
+{% extends "customer_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block sheri %}
+
+ <div class="container">
+    {% include "customer/cars/menu.html" %}
+
+    <!-- search -->
+    <div class="col-md-6 mb-3">
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+            <i class="bi bi-search-heart"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="ابحث عن سيارتك المفضلة" aria-label="ابحث عن سيارتك المفضلة" aria-describedby="basic-addon1">
+        </div>
+    </div>
+    <!-- end search -->
+
+    <!-- filter -->
+        <div class="row justify-content-evenly justify-content-md-start mb-5">
+                <button class="col-5 col-md-2 me-md-2 btn btn-outline-dark rounded-2">
+                    <i class="bi bi-funnel"></i>
+                    تصفية
+                </button>
+                <button class="col-5 col-md-2 btn btn-outline-dark rounded-2">
+                    <i class="bi bi-filter"></i>
+                    ترتيب
+                </button>
+        </div>
+
+    <!-- end filter -->
+
+    <!-- cars -->
+{% comment %} 
+     <h2 class="text-center text-md-start mb-3">
+        <span class="text-success">سيارات</span>
+         خصيصاً لك
+     </h2> {% endcomment %}
+
+     <div class="row gx-5">
+        {% for i in '1234567789' %}
+        {% for car in cars %}
+        <div class="card p-0 mx-auto mx-md-2 mb-5" style="width: 18rem;">
+            {% comment %} <div class="position-relative z-1">
+                <div class="position-absolute top-0 start-50 translate-middle-x text-center bg-success rounded-bottom p-1 fs-6 text-white shadow">
+                    {{car.price}}
+                    <small>ريال</small>
+                </div>
+                <strong class="position-absolute start-50 translate-middle-x text-warning fs-5 mt-3" style="-webkit-text-stroke: .5px #0d6efd;">خصم</strong>
+            </div> {% endcomment %}
+
+
+            <div class="position-relative">
+                <img src="{{car.icon.url}}" class="card-img-top" alt="...">
+                {% comment %} <div class="position-absolute bottom-0 start-50 translate-middle-x text-center bg-dark rounded-top p-1 text-white shadow" style="font-size: 10px;">
+                    شحن مجاني و1,000 ريال كاش باك
+                </div> {% endcomment %}
+            </div>
+            <div class="card-body">
+            <h5 class="card-title BodyTitle">{{car.title}}</h5>
+            <div class="d-flex align-items-end justify-content-between">
+                <div>
+                    <small class="mb-0 text-success d-block BodySubtitle">السعر التقسيط شهرياََ</small>
+                    <button class="btn btn-outline-dark">
+                        {{car.calculate_down_payment}} ريال
+                    </button>
+                </div>
+                <div>
+                    <a href="{% url 'installment_view_car' car.id %}" class="btn btn-dark me-1">
+                    عرض
+                    </a>
+                    <i class="bi bi-heart fs-3"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    <!-- end cars -->
+ </div>
+
+
+{% endblock %}

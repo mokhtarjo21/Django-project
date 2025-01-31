@@ -1,0 +1,64 @@
+{% extends "dashboard_base.html" %}
+{% load panel_tags %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="container px-4 px-md-5">
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      <h1 class="display-4 fw-normal text-body-emphasis fs-4">تعديل المستخدم</h1>
+
+  </div>
+  <form class="col-lg-8 mx-auto bg-body-tertiary p-4 rounded needs-validation FormAuto" novalidate id="project_form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h4>معلومات المستخدم</h4>
+    <div class="mb-3">
+      {% for field in user_form %}
+      {% if field.field.widget.input_type != 'hidden' %}
+          <div id="{{ field.auto_id }}_error">
+          {{ field.errors }}
+          </div>
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+              <p class="help form-text" id="{{ field.auto_id }}_helptext">
+              {{ field.help_text|safe }}
+              </p>
+          {% endif %}
+      {% else %}
+      {{ field }}
+      {% endif %}
+
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <h4>معلومات الملف الشخصي</h4>
+      {% for field in profile_form %}
+      {% if field.field.widget.input_type != 'hidden' %}
+          <div id="{{ field.auto_id }}_error">
+          {{ field.errors }}
+          </div>
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+              <p class="help form-text" id="{{ field.auto_id }}_helptext">
+              {{ field.help_text|safe }}
+              </p>
+          {% endif %}
+      {% else %}
+      {{ field }}
+      {% endif %}
+
+      {% endfor %}
+    </div>
+      <div class="col-8 col-md-6 mx-auto">
+        <button type="submit" class="mb-2 btn btn-lg btn-success w-100">حفظ</button>
+        <a href="{% url 'dashboard_clients' %}" class="btn btn-secondary btn-lg w-100">الغاء</a>
+      </div>
+
+  </form>
+</div>
+
+
+{% endblock content %}
+

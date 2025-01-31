@@ -1,0 +1,243 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block heads %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+{% endblock heads %}
+{% block sheri %}
+
+
+<div class="container">
+    <h2 class="py-3">رقم التتبع : {{order.order_id}}</h2>
+</div>
+<!-- Project Form -->
+<div class="container p-4 bg-body-tertiary">
+
+    <div class="list-group list-group-checkable row row-cols-2 row row-cols-md-4 flex-row justify-content-center justify-content-md-start">
+        <label class="col-5 col-md-2 list-group-item rounded-3 py-3 me-1 mb-2 d-flex justify-content-between {% if buy_car_order.status in 'pending in_progress shipped delivered' %}active{% endif %}" for="listGroupCheckableRadios1">
+            <div>
+                <h6>1-قيد الانتظار</h6>
+                <span class="d-block small opacity-50">في انتظار مراجعة طلبك</span>
+            </div>
+            <i class="bi bi-hourglass-split fs-2"></i>
+        </label>
+        <label class="col-5 col-md-2 list-group-item rounded-3 py-3 me-1 mb-2 d-flex justify-content-between {% if buy_car_order.status in 'in_progress shipped delivered' %}active{% endif %}" for="listGroupCheckableRadios1">
+            <div>
+                <h6>2-قيد التنفيذ</h6>
+                <span class="d-block small opacity-50">يتم العمل على طلبك</span>
+            </div>
+            <i class="bi bi-gear fs-2"></i>
+        </label>
+        <label class="col-5 col-md-2 list-group-item rounded-3 py-3 me-1 mb-2  d-flex justify-content-between {% if buy_car_order.status in 'shipped delivered' %}active{% endif %}" for="listGroupCheckableRadios1">
+            <div>
+                <h6>3-يتم الشحن</h6>
+                <span class="d-block small opacity-50">طلبك في الطريق</span>
+            </div>
+            <i class="bi bi-truck fs-2"></i>
+        </label>
+        <label class="col-5 col-md-2 list-group-item rounded-3 py-3 me-1 mb-2  d-flex justify-content-between {% if buy_car_order.status in 'delivered' %}active{% endif %}" for="listGroupCheckableRadios1">
+            <div>
+                <h6>4-تم التسليم</h6>
+                <span class="d-block small opacity-50">تم تسليم طلبك</span>
+            </div>
+            <i class="bi bi-check-circle fs-2"></i>
+        </label>
+    
+      </div>
+</div>
+
+
+<!-- FAQ reviews -->
+<div class="py-5 px-2 px-md-4 ">
+    <h3 class="text-center py-4">
+        <span class="text-primary">معلومات</span>
+        الطلب
+    </h3>
+    <div class="accordion accordion-flush mx-auto" id="accordionFlushExample" style="max-width: 1080px;">
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow border border-primary">
+            <h2 class="accordion-header">
+                <div class="accordion-button rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                    {% trans "معلومات الطلب" %}
+
+                </div>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+
+                    <div class="row row-cols-1 row-cols-md-2">
+
+                        <!-- Order Details -->
+                        <div>
+                            <i class="bi bi-calendar-check"></i>
+                            <span class="me-1">تاريخ الطلب:</span>
+                            <strong>{{ buy_car_order.order_date }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-calendar-event"></i>
+                            <span class="me-1">تاريخ التسليم المتوقع:</span>
+                            <strong>{{ buy_car_order.delivery_date }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-geo-alt"></i>
+                            <span class="me-1">عنوان التسليم:</span>
+                            <strong>{{ buy_car_order.address }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-chat-left-text"></i>
+                            <span class="me-1">ملاحظات إضافية:</span>
+                            <strong>{{ buy_car_order.notes }}</strong>
+                            <hr>
+                        </div>
+                    
+                        <!-- Order Status -->
+                        <div>
+                            <i class="bi bi-info-circle"></i>
+                            <span class="me-1">حالة الطلب:</span>
+                            <strong>{{ buy_car_order.get_status_display }}</strong>
+                            <hr>
+                        </div>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne2" aria-expanded="false" aria-controls="flush-collapseOne2">
+                    {% trans "معلومات المستخدم" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <!-- Customer Information -->
+                        <div>
+                            <i class="bi bi-person"></i>
+                            <span class="me-1">اسم العميل:</span>
+                            <strong>{{ buy_car_order.name }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-envelope"></i>
+                            <span class="me-1">البريد الإلكتروني:</span>
+                            <strong>{{ buy_car_order.email }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-phone"></i>
+                            <span class="me-1">رقم الهاتف:</span>
+                            <strong>{{ buy_car_order.phone }}</strong>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne3" aria-expanded="false" aria-controls="flush-collapseOne3">
+                    {% trans "معلومات السيارة" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne3" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% if buy_car_order.vehicle.image %}
+                    <img src="{{buy_car_order.vehicle.image.url}}" alt="..." style="max-height: 350px; object-fit: cover;" class="w-100 rounded mb-3">
+                    {% endif %}
+                    <hr>
+
+                    <div class="row row-cols-1 row-cols-md-2">
+                        {% if buy_car_order.vehicle %}
+                        <div>
+                            <i class="bi bi-car-front"></i>
+                            <span class="me-1">السيارة:</span>
+                            <a href="{% url 'view_for_sell_vehicle' buy_car_order.vehicle.id %}">{{ buy_car_order.vehicle.name }}</a>
+                            <hr>
+                        </div>
+                        {% endif %}
+                        <!-- Car Details -->
+                        <div class="">
+                            <i class="bi bi-building"></i>
+                            <span class="me-1">الماركة:</span>
+                            <strong>{{ buy_car_order.vehicle.brand }}</strong>
+                            <hr>
+                        </div>
+                        <div class="">
+                            <i class="bi bi-car-front"></i>
+                            <span class="me-1">الموديل:</span>
+                            <strong>{{ buy_car_order.vehicle.model_number }}</strong>
+                            <hr>
+                        </div>
+                        <div class="">
+                            <i class="bi bi-calendar"></i>
+                            <span class="me-1">سنة الصنع:</span>
+                            <strong>{{ buy_car_order.vehicle.year }}</strong>
+                            <hr>
+                        </div>
+                        <div class="">
+                            <i class="bi bi-lightning"></i>
+                            <span class="me-1">الحمولة:</span>
+                            <strong>{{ buy_car_order.vehicle.capacity }} طن</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-cash-coin"></i>
+                            <span class="me-1">سعر السيارة:</span>
+                            <strong>{{ buy_car_order.price }}</strong>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne4" aria-expanded="false" aria-controls="flush-collapseOne4">
+                    {% trans "معلومات شركة الشحن" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne4" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <!-- Shipping Information -->
+                        <div>
+                            <i class="bi bi-truck"></i>
+                            <span class="me-1">شركة الشحن:</span>
+                            <strong>{{ buy_car_order.shipping_company }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-upc-scan"></i>
+                            <span class="me-1">رقم التتبع:</span>
+                            <strong>{{ buy_car_order.tracking_number }}</strong>
+                            <hr>
+                        </div>
+                        <div>
+                            <i class="bi bi-cash"></i>
+                            <span class="me-1">تكلفة الشحن:</span>
+                            <strong>{{ buy_car_order.shipping_cost }}</strong>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="py-4"></div>
+
+{% endblock %}

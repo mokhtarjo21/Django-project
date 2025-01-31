@@ -1,0 +1,80 @@
+{% extends "dashboard_base.html" %}
+{% load panel_tags %}
+{% load i18n %}
+
+{% block content %}
+<!-- Project Form -->
+<div class="container p-4 ">
+    <div class="d-flex align-items-start mb-3">
+
+        <div class="rounded-3 me-2 p-1 bg-body-tertiary d-flex ">
+            <a href="{% url 'dashboard_index' %}" class="btn btn-dark me-1">{% trans "اضافة سيارة" %}</a>
+            <a tabindex="0" class="btn btn-light border border-1" id="filter-popover-btn" role="button" data-bs-toggle="popover">
+              <i class="bi bi-funnel-fill"></i>
+              {% trans "تصفية" %}
+            </a>
+        </div>
+    
+    
+        <form action="{% url 'dashboard_index' %}" method="post" id="SelectedForm">
+          {% csrf_token %}
+          <input type="hidden" value="xlsx" name="out_format" id="out_format">
+          <input type="hidden" name="method" value="xlsx">
+        </form>
+        
+
+
+        <button type="button" class="btn btn-outline-danger disabled me-2" onclick="submitSelected('delete')" id="deleteBtn">{% trans "حذف المحدد" %}</button>
+      </div>
+
+
+    <div class="border rounded p-3 mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>العميل</th>
+                    <th>المبلغ</th>
+                    <th>الحد الادنى للمبلغ</th>
+                    <th>المبلغ المتبقي</th>
+                    <th>المبلغ الأجمالي</th>
+                    <th>تاريخ الدفع</th>
+                    <th>الحالة</th>
+                    <th>إجرائات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    {% with payment.installment_request as installment_request%}
+                    <td>{{ installment_request.ordermodel.customer.userprofile.get_full_name }}</td>
+                    <td>{{ payment.amount_paid }}</td>
+                    <td>{{ installment_request.calculate_down_payment }}</td>
+                    <td>{{ installment_request.get_reminding_car_price|stringformat:'d' }}</td>
+                    <td>{{ installment_request.get_full_car_price|stringformat:'d' }}</td>
+                    {% endwith %}
+                    <td>{{ payment.payment_date|date:'Y-m-d' }}</td>
+                    <td>{{ payment.get_status_display }}</td>
+                    <td>
+                        {% comment %} <a class="btn btn-primary" href="{% url 'dashboard_edit_for_sell_car' payment.id %}">تعديل</a> {% endcomment %}
+                        <a class="btn btn-dark" href="{% url 'dashboard_edit_installment_payment_request' payment.id %}">عرض</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">لا توجد سيارات متاحة حالياً.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="py-4"></div>
+
+
+
+{% endblock content %}
+

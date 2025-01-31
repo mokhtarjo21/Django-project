@@ -1,0 +1,547 @@
+{% extends "landing_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block sheri %}
+
+<!-- header -->
+<div class=" px-4 py-5 text-center">
+    <div class="py-5 text-body-emphasis">
+        <h1 class="display-5 fw-bold container mb-4">
+            <span class="text-primary">{% trans "سيار – " %}</span>{% trans "انطلق نحو المستقبل" %} <br>
+        </h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="fs-5 mb-4">
+                {% trans "نقدم حلولًا شاملة تتعلق بالمركبات والخدمات المرافقة لها، ويهدف إلى تبسيط حياة المستخدمين وجعل التنقل والخدمات المتعلقة بالسيارات أسهل وأسرع." %}
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/{{LANGUAGE_CODE}}/#contact-us" class="btn btn-primary btn-lg px-4 zoom-anim">
+                    <i class="fa-solid fa-caret-right"></i>
+                    {% trans "ابداء عالم السيارات" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+
+<!-- Trusted industry -->
+<div class="container py-5 text-center">
+    <h2 class="py-4">
+        {% trans "ماركات شاملة" %}
+    </h2>
+    <div class="py-4 row row-cols-2 row-cols-sm-3 row-cols-lg-6 g-2 g-lg-3">
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/4.png" alt="" width="75">
+        </div>
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/60.png" alt="" width="75">
+        </div>
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/37.png" alt="" width="75">
+        </div>
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/69.png" alt="" width="75">
+        </div>
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/15.png" alt="" width="75">
+        </div>
+        <div class="col">
+            <img src="https://cdn-frontend-r2.syarah.com/prod/cars/66.png" alt="" width="75">
+        </div>
+    </div>
+    <h5>+99 ماركة اخرى</h5>
+
+</div>
+<!-- End Trusted industry -->
+
+
+
+
+<!-- Solutions -->
+<div class="container py-5">
+
+    <div class="bg-black p-4 p-md-5 rounded-4 text-center">
+        <h2 class="text-white col-lg-6 mx-auto">
+            <span class="text-success">{% trans "نحن نقدم حلولًا مبتكرة </span> لمجموعة واسعة من الخدمات " %}
+        </h2>
+
+
+        <ul class="p-0 py-4 row row row-cols-1 row-cols-sm-2 row-cols-lg-5 g-2 g-lg-5 text-white"
+            style="list-style: none;">
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-cart-shopping fa-2x"></i>
+                    <p>{% trans "بيع وشراء السيارات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-hexagon-nodes fa-2x"></i>
+                    <p>{% trans "المزادات على السيارات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-taxi fa-2x"></i>
+                    <p>{% trans "توصيل المشاوير" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-utensils fa-2x"></i>
+                    <p>{% trans "توصيل طلبات الطعام" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-shower fa-2x"></i>
+                    <p>{% trans "غسيل السيارات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-car-battery fa-2x"></i>
+                    <p>{% trans "بيع قطع غيار السيارات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-truck fa-2x"></i>
+                    <p>{% trans "شحن المعدات الثقيلة" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
+                    <p>{% trans "خدمات الصيانة والعناية بالمركبات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-truck-ramp-box fa-2x"></i>
+                    <p>{% trans "تصدير السيارات" %}</p>
+                </button>
+            </li>
+            <li class="col">
+                <button class="btn btn-outline-light p-4 w-100 h-100">
+                    <i class="fa-solid fa-code-compare fa-2x"></i>
+                    <p>{% trans "مقارنة السيارات" %}</p>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<!-- End Solutions -->
+
+
+
+<!-- Services Features -->
+<div class="container py-5">
+    <h2 class="text-center py-4 border-top">{% trans "مميزات المنصة" %}</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-display fa-3x mb-2"></i>
+                    <p class="text-success my-2">{% trans "المنصة" %}</p>
+                    <h3 class="py-3">{% trans "منصة سهلة الاستخدام" %}</h3>
+                    <p>{% trans "واجهة بسيطة وبديهية تتيح لك إدارة جميع عملياتك بسهولة، ليتمكن جميع المستخدمين الاستفادة من خدماتنا." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-shield-halved fa-3x"></i>
+                    <p class="text-success my-2">{% trans "الحماية" %}</p>
+                    <h3 class="py-3">{% trans "محمية من الثغرات الأمنية" %}</h3>
+                    <p>{% trans "منصة مزود بتقنيات حماية متقدمة لحماية بياناتك من التهديدات والهجمات الإلكترونية." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-tablet-screen-button fa-3x"></i>
+                    <p class="text-success my-2">{% trans "الاستجابة" %}</p>
+                    <h3 class="py-3">{% trans "دعم متعدد الأجهزة" %}</h3>
+                    <p>{% trans "يمكنك الوصول إلى النظام عبر أجهزة مختلفة مثل أجهزة الكمبيوتر أو الهواتف الذكية أو الأجهزة اللوحية." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-cube fa-3x"></i>
+                    <p class="text-success my-2">{% trans "متعددة" %}</p>
+                    <h3 class="py-3">{% trans "خدمات متعددة" %}</h3>
+                    <p>{% trans "نوفر لك مجموعة متكاملة من الخدمات والحلول في منصة واحدة، مصممة لتلبية احتياجاتك المتنوعة بطريقة سهلة وفعالة." %}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-wallet fa-3x"></i>
+                    <p class="text-success my-2">{% trans "الدفع" %}</p>
+                    <h3 class="py-3">{% trans "المحفظة الإلكترونية" %}</h3>
+                    <p>{% trans "حلول دفع آمنة وسهلة لإدارة معاملاتك المالية بكل كفاءة وراحة." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border d-grid border-0 h-100">
+                <div class="bg-black p-5 text-start text-white rounded-4">
+                    <i class="fa-solid fa-headset fa-3x"></i>
+                    <p class="text-success my-2">{% trans "الدعم" %}</p>
+                    <h3 class="py-3">{% trans "الدعم الفني 24/7" %}</h3>
+                    <p>{% trans "فريق دعم متخصص متواجد على مدار الساعة لمساعدتك في أي مشاكل أو استفسارات." %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<!-- End Services Features -->
+
+
+
+
+
+<!-- Customer reviews -->
+<div class="container py-5">
+    <h2 class="text-center py-4 border-top">{% trans "اراء المستخدمين" %}</h2>
+
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        <div class="col zoom-anim">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                style="background-image: url('{% static 'img/reviews/background-diva-26694057.webp' %}');">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+
+                    <h3 class="my-4 lh-1 fw-bold">{% trans "اشتريت سيارة مستعملة عن طريق التطبيق وكانت التجربة رائعة! كل التفاصيل واضحة والبائع كان متعاون جداً. التطبيق سهل الاستخدام ويوفر خيارات تمويل ممتازة." %}</h3>
+                    <ul class="d-flex list-unstyled mt-auto">
+                        <li class="me-auto">
+                            <img src="{% static 'img/reviews/review-0.webp' %}" alt="Bootstrap" width="32" height="32"
+                                class="rounded-circle border border-white">
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#geo-fill"></use>
+                            </svg>
+                            <small>{% trans "نورة. ع، الرياض" %}</small>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#calendar3"></use>
+                            </svg>
+                            <small>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col zoom-anim">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                style="background-image: url('{% static 'img/reviews/unsplash-photo-3.jpg' %}');">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h3 class="my-4 lh-1 fw-bold">{% trans "أفضل تطبيق للتوصيل! الكابتن وصل الطلب بسرعة وبدون أي مشاكل. خدمة العملاء متجاوبة جداً وأسعار تنافسية وخدمة مميزة." %}</h3>
+                    <ul class="d-flex list-unstyled mt-auto">
+                        <li class="me-auto">
+                            <img src="{% static 'img/reviews/review-2.webp' %}" alt="Bootstrap" width="32" height="32"
+                                class="rounded-circle border border-white">
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#geo-fill"></use>
+                            </svg>
+                            <small>{% trans "محمد. س، الدمام" %}</small>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#calendar3"></use>
+                            </svg>
+                            <small>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col zoom-anim">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                style="background-image: url('{% static 'img/reviews/background-rccbtn-61760629.webp' %}');">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                    <h3 class="my-4 lh-1 fw-bold">{% trans "كنت أعاني من مشكلة في بطارية السيارة واتصلت بأحد مزودي الخدمة في التطبيق. الخدمة كانت ممتازة والأسعار معقولة جداً." %}</h3>
+                    <ul class="d-flex list-unstyled mt-auto">
+                        <li class="me-auto">
+                            <img src="{% static 'img/reviews/review-3.webp' %}" alt="Bootstrap" width="32" height="32"
+                                class="rounded-circle border border-white">
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#geo-fill"></use>
+                            </svg>
+                            <small>{% trans "فيصل. ر، المدينة المنورة" %}</small>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <svg class="bi me-2" width="1em" height="1em">
+                                <use xlink:href="#calendar3"></use>
+                            </svg>
+                            <small>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Customer reviews -->
+
+
+
+
+<!-- Services Features -->
+<div class="container py-5">
+    <h2 class="text-center py-4 border-top">{% trans "هل يحدث لك هذا؟" %}</h2>
+
+    <div class="p-4 glass-eff mb-3 rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-frown fa-2x text-danger"></i>
+        <h6 class="ms-2">{% trans "صعوبة العثور على مزودي خدمات موثوقين" %}</h6>
+    </div>
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-frown fa-2x text-danger"></i>
+        <h6 class="ms-2">{% trans "اختلاف الأسعار وعدم الوضوح" %}</h6>
+    </div>
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-frown fa-2x text-danger"></i>
+        <h6 class="ms-2">{% trans "إهدار الوقت والجهد" %}
+        </h6>
+    </div>
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-frown fa-2x text-danger"></i>
+        <h6 class="ms-2">{% trans "عدم وجود خيارات متنوعة" %}</h6>
+    </div>
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-frown fa-2x text-danger"></i>
+        <h6 class="ms-2">{% trans "عدم وجود تقييمات" %}</h6>
+    </div>
+
+    <h2 class="text-center py-4 ">{% trans "بعد استخدام المنصة" %}</h2>
+
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-smile fa-2x text-success"></i>
+        <h6 class="ms-2">{% trans "الوصول إلى مزودي الخدمة الموثوقين" %}</h6>
+    </div>
+
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-smile fa-2x text-success"></i>
+        <h6 class="ms-2">{% trans "أسعار واضحة ومحددة" %}</h6>
+    </div>
+
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-smile fa-2x text-success"></i>
+        <h6 class="ms-2">{% trans "توفير الوقت والجهد" %}</h6>
+    </div>
+
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-smile fa-2x text-success"></i>
+        <h6 class="ms-2">{% trans "منصة شاملة للخدمات" %}</h6>
+    </div>
+    <div class="p-4 glass-eff mb-3  rounded-4 mx-auto d-flex align-items-center zoom-anim" style="max-width: 768px;">
+        <i class="fa-solid fa-face-smile fa-2x text-success"></i>
+        <h6 class="ms-2">{% trans "نظام التقييم والمراجعات" %}</h6>
+    </div>
+</div>
+<!-- End Services Features -->
+
+
+
+<!-- Services Features -->
+<div class="p-2 p-md-5 py-5 bg-body-tertiary">
+    <h2 class="text-center py-4 ">
+        {% trans "مصممة لتلبي<br>جميع احتياجاتك" %}
+    </h2>
+    <p class="text-center col-lg-6 mx-auto">
+        {% trans "نحن نقدم خدمات من الدرجة الأولى. مع أسهل عملية بيع وشراء وبأفضل أداء." %}
+    </p>
+
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="/{{LANGUAGE_CODE}}/#contact-us" class="btn btn-primary btn-lg px-4 zoom-anim rounded-4 shadow-lg">
+            <i class="fa-solid fa-caret-right"></i>
+            {% trans "ابداء الان" %}
+        </a>
+    </div>
+</div>
+
+
+
+
+
+<!-- FAQ reviews -->
+<div class="py-5 px-2 px-md-4 glass-light-dark">
+    <h2 class="text-center py-4 ">{% trans "الاسئلة المتكررة" %}</h2>
+    <div class="accordion accordion-flush mx-auto" id="accordionFlushExample" style="max-width: 1080px;">
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {% trans "كيف يمكنني التسجيل في المنصة؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "يمكنك التسجيل عن طريق الضغط على زر التسجيل او ابدء الان." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne2" aria-expanded="false" aria-controls="flush-collapseOne2">
+                    {% trans "هل المنصة مجانية؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "التسجيل مجاني، ولكن بعض الخدمات تتطلب رسومًا يتم توضيحها قبل إتمام الطلب." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne3" aria-expanded="false" aria-controls="flush-collapseOne3">
+                    {% trans "كيف يمكنني البحث عن مزودي الخدمة؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne3" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "يمكنك استخدام خاصية البحث داخل التطبيق وتحديد الفئة أو الخدمة المطلوبة." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne4" aria-expanded="false" aria-controls="flush-collapseOne4">
+                    {% trans "كيف أضمن جودة الخدمة؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne4" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "يمكنك الاطلاع على تقييمات العملاء السابقين لمزودي الخدمة واختيار الأفضل بناءً على تجربتهم." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne5" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {% trans "كيف يمكنني تتبع حالة طلبي؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne5" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "يمكنك متابعة حالة الطلب عبر خاصية التتبع في التطبيق، وستصلك إشعارات عند تحديث الحالة." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item p-4 rounded-4 mb-3 border-0 shadow">
+            <h2 class="accordion-header">
+                <div class="accordion-button collapsed rounded-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne6" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {% trans "هل يمكن للشركات التسجيل في المنصة؟" %}
+                </div>
+            </h2>
+            <div id="flush-collapseOne6" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    {% trans "نعم، المنصة تدعم الأفراد والشركات على حد سواء، مع خدمات مخصصة للشركات." %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="text-center my-4">
+        <a href="{% url 'landingPage' %}" class="">{% trans "Show more questions" %}</a>
+    </div>
+</div>
+<!-- end -->
+
+
+
+<!-- Services Features -->
+<div class="container py-5">
+    <h2 class="text-center py-4">نقدم لك ايضاََ تطبيق سيار</h2>
+    <div class="row row-cols-1 row-cols-md-2 g-2">
+        <div class="col">
+            <div class="bg-body-tertiary mx-2 py-5 row row-cols-2">
+                <i class="col-3 fa-brands fa-google-play fa-3x"></i>
+                <div class="col">
+                    <h3>تنزيل التطبيق</h3>
+                    <p>نزل للاجهزة الاندرويد</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="bg-body-tertiary mx-2 py-5 row row-cols-2">
+                <i class="col-3 fa-brands fa-apple fa-3x"></i>
+                <div class="col">
+                    <h3>تنزيل التطبيق</h3>
+                    <p>نزل للاجهزة ios</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Services Features -->
+
+
+<!-- vefied -->
+ <div class="container bg-body-tertiary p-3 mb-5 rounded">
+    <img src="{% static 'img/svg/verifyed.svg' %}" width="150" alt="" class="mx-auto d-block mb-3">
+    <p class="text-center">هذا الموقع موثوق من وزارة التجارة والاستثمار وبدعم من شركة علم, بسجل تجاري رقم
+        <strong>1234567800</strong>
+    </p>
+    <div class="d-flex justify-content-center align-items-center flex-wrap">
+        <img src="{% static 'img/partner1.png' %}" alt="" class="rounded-4 me-2 mb-2">
+        <img src="{% static 'img/partner2.png' %}" alt="" class="rounded-4 me-2 mb-2">
+        <img src="{% static 'img/partner3.png' %}" alt="" class="rounded-4 me-2 mb-2">
+    </div>
+</div>
+
+<h2 class="text-center" style="color: #42484c;">طرق الدفع التي نوفرها</h2>
+<div class="d-flex justify-content-center align-items-center flex-wrap mb-5" >
+    <img class="me-2" width="75" src="{% static 'img/payments/mada-logo.png' %}" alt="">
+    <img class="me-2" width="75" src="{% static 'img/payments/mc-logo-52.svg' %}" alt="">
+    <img class="me-2" width="75" src="{% static 'img/payments/visa-logo-visa-icon-transparent-free-png.webp' %}" alt="">
+</div>
+<!-- end vefied -->
+{% endblock sheri %}

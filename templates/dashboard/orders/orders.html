@@ -1,0 +1,168 @@
+{% extends "dashboard_base.html" %}
+{% load panel_tags %}
+{% load i18n %}
+
+{% block content %}
+<!-- Project Form -->
+<div class="container p-4 ">
+    <div class="d-flex mb-3 justify-content-center justify-content-sm-start">
+        <a class="btn btn-outline-dark rounded-4 me-2" data-bs-toggle="modal" data-bs-target="#modalCarimportOrder">استيراد سيارة</a>
+    </div>
+    <div class="order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">طلباتك</span>
+          <span class="badge bg-primary rounded-pill">{{orders.count}}</span>
+        </h4>
+
+
+
+        <div class="border rounded p-3 mb-3">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>المستخدم</th>
+                      <th>العنوان</th>
+                      <th>وصف</th>
+                      <th>الحالة</th>
+                      <th>إجرائات</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for order in orders %}
+                  <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ order.customer.userprofile.get_full_name }}</td>
+
+                        {% if order.order_type == 'buy_car' %}
+                        <td>
+                          {{order.buy_car_order.car.title}}
+                        </td>
+                        <td>
+                          <small class="text-body-secondary">شراء وشحن السيارة</small>
+                        </td>
+                        <td>
+                          <span class="text-nowrap">({{order.buy_car_order.get_status_display}})</span>
+                        </td>
+                      {% elif order.order_type == 'car_import' %}
+                      <td>
+                        {{order.buy_car_order.car_import}}
+                      </td>
+                      <td>
+                        <small class="text-body-secondary">استراد وشحن السيارة</small>
+                      </td>
+                      <td>
+                        <span class="text-nowrap">({{order.buy_car_order.get_status_display}})</span>
+                      </td>
+                      {% elif order.order_type == 'car_rental' %}
+                    <td>
+                      {{order.car_rental_order.car_rental.car}}
+                    </td>
+                    <td>
+                      <small class="text-body-secondary">تأجير سيارة</small>
+                    </td>
+                    <td>
+                      <span class="text-nowrap">({{order.car_rental_order.get_status_display}})</span>
+                    </td>
+                      {% elif order.order_type == 'car_installment' %}
+                      <td>
+                        {{order.car_installment_order.car}}
+                      </td>
+                      <td>
+                        <small class="text-body-secondary">طلب شراء السيارة بتقسيط</small>
+                      </td>
+                      <td>
+                        <span class="text-nowrap">({{order.car_installment_order.get_status_display}})</span>
+                      </td>
+                      {% endif %}
+
+                      <td>
+                        <a 
+                        {% if order.order_type == 'buy_car'%}
+                        href="{% url 'dashboard_view_buy_car_order' order.id %}"
+                        {% elif order.order_type == 'car_import' %}
+                        href="{% url 'dashboard_view_car_import_order' order.id %}"
+                        {% elif order.order_type == 'car_rental' %}
+                        href="{% url 'dashboard_view_car_rental_order' order.id %}"
+                        {% elif order.order_type == 'car_installment' %}
+                        href="{% url 'dashboard_view_car_installment_order' order.id %}"
+                        {% endif %}
+                         class="btn btn-dark">عرض</a>
+                      </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="8" class="text-center">لا توجد سيارات متاحة حالياً.</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      </div>
+
+</div>
+
+<div class="py-4"></div>
+
+
+
+<!-- car import Modal -->
+<div class="modal fade" id="modalCarimportOrder" tabindex="-1" aria-labelledby="modalCarimportOrderlabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">{% trans "طلب استراد سيارة" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body p-5 pt-0">
+          <form class="FormAuto" action="{% url 'order_car_import' %}" method="post">
+            {% csrf_token %}
+            
+            {% for field in car_import_form %}
+            {% if field.field.widget.input_type != 'hidden' %}
+                <div id="{{ field.auto_id }}_error">
+                {{ field.errors }}
+                </div>
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                    {{ field.help_text|safe }}
+                    </p>
+                {% endif %}
+            {% else %}
+            {{ field }}
+            {% endif %}
+
+            {% endfor %}
+
+
+
+            {% for field in buy_car_form %}
+            {% if field.field.widget.input_type != 'hidden' %}
+                <div id="{{ field.auto_id }}_error">
+                {{ field.errors }}
+                </div>
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help form-text" id="{{ field.auto_id }}_helptext">
+                    {{ field.help_text|safe }}
+                    </p>
+                {% endif %}
+            {% else %}
+            {{ field }}
+            {% endif %}
+    
+            {% endfor %}
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">طلب استراد السيارة</button>
+            <small class="text-body-secondary">بالنقر فوق "طلب الشراء"، فإنك توافق على شروط الاستخدام.</small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
+
+
+{% endblock content %}
+

@@ -1,0 +1,60 @@
+{% extends "dashboard_base.html" %}
+{% load panel_tags %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="container px-4 px-md-5">
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      <h1 class="display-4 fw-normal text-body-emphasis fs-4">اضافة سيارة</h1>
+
+  </div>
+  <form class="col-lg-8 mx-auto bg-body-tertiary p-4 rounded needs-validation FormAuto" novalidate id="project_form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+      {% for field in buy_car_form %}
+      {% if field.field.widget.input_type != 'hidden' %}
+          <div id="{{ field.auto_id }}_error">
+          {{ field.errors }}
+          </div>
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+              <p class="help form-text" id="{{ field.auto_id }}_helptext">
+              {{ field.help_text|safe }}
+              </p>
+          {% endif %}
+      {% else %}
+      {{ field }}
+      {% endif %}
+
+      {% endfor %}
+
+
+
+      {% for field in car_import_form %}
+      {% if field.field.widget.input_type != 'hidden' %}
+          <div id="{{ field.auto_id }}_error">
+          {{ field.errors }}
+          </div>
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+              <p class="help form-text" id="{{ field.auto_id }}_helptext">
+              {{ field.help_text|safe }}
+              </p>
+          {% endif %}
+      {% else %}
+      {{ field }}
+      {% endif %}
+
+      {% endfor %}
+
+
+
+
+      <button type="submit" class="mb-5 btn btn-success d-block mx-auto">حفظ</button>
+  </form>
+</div>
+
+
+{% endblock content %}
+
