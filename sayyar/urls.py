@@ -27,6 +27,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
 ] + i18n_patterns(
+    path('services/',include('services.urls')),
     path('', include('pages.urls')),
     path('customer/', include('customer.urls')),
     path('accounts/', include('accounts.urls')),
