@@ -3,83 +3,92 @@
 
 
 <nav class="navbar navbar-expand-lg fixed-top mt-3">
-    <div class="container-fluid container justify-content-center justify-content-lg-between">
-      
-      {% if '/resources/' in request.path %}
-      <div class="bd-navbar-toggle">
-        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar" aria-controls="bdSidebar" aria-label="Toggle docs navigation">
-          <span class="navbar-toggler-icon"></span>
-          <span class="d-none fs-6 pe-1">Browse</span>
-        </button>
-      </div>
-      {% endif %}
+  <div class="container-fluid container justify-content-center justify-content-lg-between">
 
-      <a class="navbar-brand glass-eff p-2" href="{% url 'landingPage' %}">
-        <img width="75" src="{% static 'img/logoN.png' %}" alt="">
-      </a>
-      <button class="navbar-toggler glass-eff" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    {% if '/resources/' in request.path %}
+    <div class="bd-navbar-toggle">
+      <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+        aria-controls="bdSidebar" aria-label="Toggle docs navigation">
         <span class="navbar-toggler-icon"></span>
+        <span class="d-none fs-6 pe-1">Browse</span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto p-2 my-3 my-lg-0 ps-4 glass-eff ">
-          <li class="nav-item">
-            <a class="nav-link {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">{% trans "Home" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if 'portfolio' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">{% trans "الخدمات" %}</a>
-          </li>
+    </div>
+    {% endif %}
 
-          
-          <li class="nav-item">
-            <a class="nav-link {% if 'FAQ' == request.resolver_match.view_name %}active{% endif %}" aria-current="page" href="{% url 'landingPage' %}">{% trans "الميزات" %}</a>
-          </li>
+    <a class="navbar-brand glass-eff p-2" href="{% url 'landingPage' %}">
+      <img width="75" src="{% static 'img/logoN.png' %}" alt="">
+    </a>
+    <button class="navbar-toggler glass-eff" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto p-2 my-3 my-lg-0 ps-4 glass-eff ">
+        <li class="nav-item">
+          <a class="nav-link {% if 'index' == request.resolver_match.view_name %}active{% endif %}" aria-current="page"
+            href="{% url 'landingPage' %}">{% trans "Home" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if 'portfolio' == request.resolver_match.view_name %}active{% endif %}"
+            aria-current="page" href="/services">{% trans "الخدمات" %}</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/{{LANGUAGE_CODE}}/#contact-us">{% trans "الاسئلة المتكررة" %}</a>
-          </li>
 
-        </ul>
-        <div class="d-flex justify-content-center" role="search">
+        <li class="nav-item">
+          <a class="nav-link {% if 'FAQ' == request.resolver_match.view_name %}active{% endif %}" aria-current="page"
+            href="{% url 'landingPage' %}">{% trans "الميزات" %}</a>
+        </li>
 
-          <div class="dropdown ">
-            <button class="btn btn-light dropdown-toggle rounded-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-globe"></i>
-            </button>
-            <ul class="dropdown-menu border-0 p-0 bg-transparent">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page"
+            href="/{{LANGUAGE_CODE}}/#contact-us">{% trans "الاسئلة المتكررة" %}</a>
+        </li>
+
+      </ul>
+      <div class="d-flex justify-content-center" role="search">
+
+        <div class="dropdown ">
+          <button class="btn btn-light dropdown-toggle rounded-4" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-solid fa-globe"></i>
+          </button>
+          <ul class="dropdown-menu border-0 p-0 bg-transparent">
 
             <form method="post" action="{% url 'landingPage' %}" id="language-form">
-                {% csrf_token %}
-                <select name="language" multiple style="overflow: hidden;" class="form-select rounded-4" aria-label="Default select example" onchange="{document.querySelector('#language-form').submit()}">
-                  <option value="en">English</option>
-                  <option value="ro">română</option>
-                  <option value="de">Deutsch</option>
-                  <option value="ar">العربية</option>
-                </select>
+              {% csrf_token %}
+              <select name="language" multiple style="overflow: hidden;" class="form-select rounded-4"
+                aria-label="Default select example" onchange="{document.querySelector('#language-form').submit()}">
+                <option value="en">English</option>
+                <option value="ro">română</option>
+                <option value="de">Deutsch</option>
+                <option value="ar">العربية</option>
+              </select>
             </form>
-            </ul>
-          </div>
-          {% if not request.user.is_authenticated %}
-          <a class="btn btn-primary me-1 rounded-4 ms-2" href="{% url 'Signup' %}">
-            <i class="fa-solid fa-caret-right"></i>
-            {% trans "التسجيل" %}
-          </a>
-          <a class="btn btn-outline-primary me-2 rounded-4" data-bs-toggle="modal" data-bs-target="#modalSignin">
-            <i class="fa-solid fa-caret-right"></i>
-            {% trans "دخول" %}
-          </a>
-          {% else %}
-          <a class="btn btn-outline-primary ms-2 rounded-4" href="{% url 'Logout' %}">
-            <i class="fa-solid fa-caret-right"></i>
-            {% trans "تسجيل الخروج" %}
-          </a>
-          {% endif %}
+          </ul>
         </div>
+        {% if not request.user.is_authenticated %}
+        <a class="btn btn-primary me-1 rounded-4 ms-2" href="{% url 'Signup' %}">
+          <i class="fa-solid fa-caret-right"></i>
+          {% trans "التسجيل" %}
+        </a>
+        <a class="btn btn-outline-primary me-2 rounded-4" data-bs-toggle="modal" data-bs-target="#modalSignin">
+          <i class="fa-solid fa-caret-right"></i>
+          {% trans "دخول" %}
+        </a>
+        {% else %}
+        <a class="btn btn-outline-primary ms-2 rounded-4" href="{% url 'Logout' %}">
+          <i class="fa-solid fa-caret-right"></i>
+          {% trans "تسجيل الخروج" %}
+        </a>
+        {% endif %}
       </div>
-
-
     </div>
-    
-  </nav>
+
+
+  </div>
+
+</nav>
 
 
 
@@ -98,27 +107,36 @@
         <form class="" action="{% url 'Login' %}" method="post">
           {% csrf_token %}
           <div class="form-floating mb-3">
-            <input type="email" name="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+            <input type="email" name="email" class="form-control rounded-3" id="floatingInput"
+              placeholder="name@example.com">
             <label for="floatingInput">البريد الالكتروني</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="password" name="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
+            <input type="password" name="password" class="form-control rounded-3" id="floatingPassword"
+              placeholder="Password">
             <label for="floatingPassword">كلمة المرور</label>
           </div>
           <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">دخول</button>
           <small class="text-body-secondary">بالنقر فوق "تسجيل"، فإنك توافق على شروط الاستخدام.</small>
-          {% comment %} <hr class="my-4">
+          {% comment %}
+          <hr class="my-4">
           <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
           <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-            <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"></use></svg>
+            <svg class="bi me-1" width="16" height="16">
+              <use xlink:href="#twitter"></use>
+            </svg>
             Sign up with Twitter
           </button>
           <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
-            <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"></use></svg>
+            <svg class="bi me-1" width="16" height="16">
+              <use xlink:href="#facebook"></use>
+            </svg>
             Sign up with Facebook
           </button>
           <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-            <svg class="bi me-1" width="16" height="16"><use xlink:href="#github"></use></svg>
+            <svg class="bi me-1" width="16" height="16">
+              <use xlink:href="#github"></use>
+            </svg>
             Sign up with GitHub
           </button> {% endcomment %}
         </form>

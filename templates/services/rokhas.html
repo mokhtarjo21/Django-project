@@ -6,8 +6,8 @@
 <!-- Contact -->
 <div class="px-3 my-5">
     <div class="container py-3 border rounded shadow-lg" style="max-width: 568px;">
-        <h2>نموذج طلب استخراج رخصة</h2>
-        <form class="p-4 p-sm-5" method='post'>
+        <h3 style="text-align: center;" class="pt-3">نموذج طلب استخراج رخصة</h3>
+        <form class="p-4 pt-1 p-sm-5" method='post'>
             {% csrf_token %}
             <div class="text-center">
                 <img width="90" src="{% static 'img/logoN.png' %}" alt="" class="mb-2">
@@ -15,12 +15,14 @@
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-user"></i>
                     الاسم بالكامل
                 </label>
                 <input type="text" id="exampleFormControlInput1" class="form-control" required>
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-id-card"></i>
                     رقم الهوية الوطنية / رقم الإقامة
                 </label>
                 <input type="text" id="exampleFormControlInput1" class="form-control" required>
@@ -29,6 +31,7 @@
 
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-calendar-alt"></i>
                     تاريخ الميلاد
                 </label>
                 <input type="date" id="exampleFormControlInput1" class="form-control" required>
@@ -36,6 +39,8 @@
 
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fa-solid fa-phone"></i>
+
                     رقم الجوال
                 </label>
                 <input type="tel" id="exampleFormControlInput1" class="form-control" required>
@@ -44,6 +49,8 @@
 
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fa-solid fa-envelope"></i>
+
                     البريد الالكتروني
                 </label>
                 <input type="email" id="exampleFormControlInput1" class="form-control" required>
@@ -52,18 +59,21 @@
             <div>
                 <div class="mb-3 col">
                     <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-city"></i>
                         المدينة
                     </label>
                     <input type="text" id="exampleFormControlInput1" class="form-control" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-map-marker-alt"></i>
                         الحي
                     </label>
                     <input type="text" id="exampleFormControlInput1" class="form-control" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-road"></i>
                         الشارع
                     </label>
                     <input type="text" id="exampleFormControlInput1" class="form-control" required>
@@ -72,7 +82,12 @@
 
             <h3>نوع الرخصة المطلوبة</h3>
             <div class="mb-3 col">
-                <label for="exampleFormControlInput1" class="form-control">نوع النشاط</label>
+                <label for="exampleFormControlInput1" class="form-control">
+                    نوع النشاط  
+                    <!-- <i class="fas fa-briefcase"></i> -->
+
+
+                </label>
                 <select class="form-control" id="exampleFormControlInput1" required>
                     <option value="commercial">تجاري</option>
                     <option value="industrial">صناعي</option>
@@ -83,6 +98,7 @@
 
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">فئة الرخصة</label>
+                <!-- <i class="fas fa-certificate"></i> -->
                 <select class="form-control" id="exampleFormControlInput1" required>
                     <option value="commercial">جديدة</option>
                     <option value="industrial">تجديد</option>
@@ -92,7 +108,7 @@
                 <label for="exampleFormControlInput1" class="form-control">اسم النشاط</label>
                 <input type="text" id="exampleFormControlInput1" class="form-control" required>
 
-                <label for="exampleFormControlInput1" class="form-control">الوصف المختصر للنشاط/label>
+                <label for="exampleFormControlInput1" class="form-control">الوصف المختصر للنشاط</label>
                     <input type="text" id="exampleFormControlInput1" class="form-control" required>
 
                     <label for="exampleFormControlInput1" class="form-control">موقع النشاط</label>
@@ -101,7 +117,8 @@
             <h3>المستندات المطلوبة</h3>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
-                    صورة الهوية الوطنيةاو الاقامة
+                    <i class="fas fa-id-badge"></i>
+                    صورة الهوية الوطنية او الاقامة
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
                     multiple required>
@@ -109,6 +126,7 @@
 
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-file-alt"></i>
                     السجل التجاري (إن وجد)
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
@@ -116,6 +134,7 @@
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-file-invoice-dollar"></i>
                     شهادة الزكاة والدخل (إن لزم)
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
@@ -123,6 +142,7 @@
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-file-contract"></i>
                     عقد الإيجار أو صك الملكية
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
@@ -130,6 +150,7 @@
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-file-upload"></i>
                     أي مستندات إضافية حسب نوع الرخصة
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
@@ -137,7 +158,13 @@
             </div>
             <h3>تفاصيل الدفع</h3>
             <div class="mb-3 col">
-                <label for="exampleFormControlInput1" class="form-control">وسيلة الدفع</label>
+                
+                
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-credit-card"></i>
+                    وسيلة الدفع
+                </label>
+                
                 <select class="form-control" id="exampleFormControlInput1" required>
                     <option value="mada">مدى</option>
                     <option value="visa">فيزا</option>
@@ -146,6 +173,7 @@
             </div>
             <div class="mb-3 col">
                 <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-receipt"></i>
                     إرفاق إيصال الدفع (إن كان مطلوبًا)
                 </label>
                 <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
@@ -153,10 +181,10 @@
             </div>
 
             <div class="mb-3 col">
+                <input type="checkbox" id="exampleFormControlInput1" required>
                 <label for="exampleFormControlInput1">
                     الموافقة على الشروط والأحكام
                 </label>
-                <input type="checkbox" id="exampleFormControlInput1" required>
             </div>
             <div class="mb-3 col">
 

@@ -1,0 +1,205 @@
+{% extends "landing_base.html" %}
+{% load static %}
+{% block sheri %}
+
+
+<!-- Contact -->
+<div class="px-3 my-5">
+    <div class="container py-3 border rounded shadow-lg" style="max-width: 568px;">
+        <h3 style="text-align: center;" class="pt-3"> نموذج طلب فحص سيارة</h3>
+        <form class="p-4 pt-1 p-sm-5" method='post'>
+            {% csrf_token %}
+            <div class="text-center">
+                <img width="90" src="{% static 'img/logoN.png' %}" alt="" class="mb-2">
+                <h3 class="mb-3 text-dark">بيانات العميل</h3>
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-user"></i>
+                    الاسم بالكامل
+                </label>
+                <input type="text" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-id-card"></i>
+                    رقم الهوية الوطنية / رقم الإقامة
+                </label>
+                <input type="text" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fa-solid fa-phone"></i>
+
+                    رقم الجوال
+                </label>
+                <input type="tel" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+
+
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fa-solid fa-envelope"></i>
+
+                    البريد الالكتروني
+                </label>
+                <input type="email" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+            <h3> بيانات السيارة</h3>
+            <div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-car"></i>
+                        نوع السيارة (الماركة)
+                    </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-car-side"></i>
+                        موديل السيارة
+                    </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-car"></i>
+                        رقم اللوحة
+                    </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-car-crash"></i>
+                        رقم الهيكل (الشاصي)
+                    </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-paint-brush"></i>
+                        لون السيارة
+                    </label>
+                    <input type="color" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+                <div class="mb-3 col">
+                    <label for="exampleFormControlInput1" class="form-control">
+                        <i class="fas fa-road"></i>
+                        عدد الكيلومترات المقطوعة
+                    </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+                </div>
+            </div>
+
+            <h3>نوع الفحص المطلوب</h3>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-tools"></i>
+                    فحص شامل</label>
+                
+                <select class="form-control" id="exampleFormControlInput1" required>
+                    <option value="commercial">فحص ميكانيكي</option>
+                    <option value="industrial">فحص كهربائي</option>
+                    <option value="professional">فحص حوادث وصدمات</option>
+                    <option value="other">فحص الهيكل الخارجي</option>
+                    <option value="other">فحص قبل الشراء</option>
+
+                </select>
+            </div>
+          <!--     -------------------------------------------- موقع الفحص ---------------------------------------->
+               <h3>موقع الفحص</h3>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-map-marked-alt"></i>
+
+                    موقعنا (عنوان الفرع)
+                </label>
+                <input type="text" id="exampleFormControlInput1" class="form-control" required>
+
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-map-marked-alt"></i>
+
+                    في موقع العميل (تحديد العنوان أو مشاركة الموقع الجغرافي)
+                </label>
+                    <input type="text" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+            <!------------------------------------------------- تاريخ ووقت الفحص ------------------------------------------------->
+            <h3>تاريخ ووقت الفحص</h3>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-calendar-alt"></i>
+
+                    اختيار 
+                </label>
+                <input type="date" id="exampleFormControlInput1" class="form-control" required>
+
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-clock"></i>
+
+                    اختيار 
+                </label>
+                    <input type="time" id="exampleFormControlInput1" class="form-control" required>
+            </div>
+            <!-----------------------------------------         المستندات المطلوبة ------------------------------------------>
+            <h3>المستندات المطلوبة</h3>
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-id-badge"></i>
+                    رفع صورة استمارة السيارة 
+                </label>
+                <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
+                    multiple >
+            </div>
+
+            <div class="mb-3 col">
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-file-alt"></i>
+                    رفع صورة السيارة من الأمام 
+                </label>
+                <input type="file" id="exampleFormControlInput1" class="form-control" accept=".jpg, .jpeg, .png, .pdf"
+                    multiple>
+            </div> 
+            <!--                                   تفاصيل الدفع -->           
+            <h3>تفاصيل الدفع</h3>
+            <div class="mb-3 col">
+                
+                
+                <label for="exampleFormControlInput1" class="form-control">
+                    <i class="fas fa-credit-card"></i>
+                    وسيلة الدفع
+                </label>
+                
+                <select class="form-control" id="exampleFormControlInput1" required>
+                    <option value="mada">مدى</option>
+                    <option value="visa">فيزا</option>
+                    <option value="bank_transfer">تحويل بنكي</option>
+                    <option value="bank_transfer">الدفع عند الفحص</option>
+
+                </select>
+            </div>
+            <div class="mb-3 col">
+                <input type="checkbox" id="exampleFormControlInput1" required>
+                <label for="exampleFormControlInput1">
+                    الموافقة على الشروط والأحكام
+                </label>
+            </div>
+            <div class="mb-3 col">
+
+                <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+            </div>
+
+            <button class="btn btn-dark mx-auto d-block">
+                <i class="fa-solid fa-user"></i>
+                إرسال الطلب
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
+</div>
+
+<!-- End Contact -->
+
+{% endblock sheri %}
